@@ -60,7 +60,13 @@
           <apisDirectory enabled="false"/>
           <configsDirectory enabled="false"/>
           <controllersDirectory/>
-          <formsDirectory enabled="false"/>
+          <formsDirectory>
+            <formFile formName="AddLog"/>
+            <formFile formName="EditLog"/>
+            <formFile formName="DeleteLog"/>
+            <formFile formName="PrintLog"/>
+            <formFile formName="UserLogs"/>
+          </formsDirectory>
           <layoutsDirectory enabled="false"/>
           <modelsDirectory/>
           <viewsDirectory>
@@ -81,7 +87,9 @@
               <actionMethod actionName="updatePassword"/>
             </controllerFile>
           </controllersDirectory>
-          <formsDirectory enabled="false"/>
+          <formsDirectory>
+            <formFile formName="Login"/>
+          </formsDirectory>
           <layoutsDirectory enabled="false"/>
           <modelsDirectory/>
           <viewsDirectory>
