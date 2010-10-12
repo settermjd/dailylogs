@@ -15,10 +15,15 @@ class Common_Controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
         $auth = Zend_Auth::getInstance();
-        if ($auth->hasIdentity()) {
-            if (Zend_Controller_Action_HelperBroker::hasHelper('redirector')) {
-                $this->_redirector = Zend_Controller_Action_HelperBroker::getExistingHelper('redirector');
+        if (!$auth->hasIdentity()) {
+            if ($request->getModuleName() == 'user' && $request->getControllerName() == 'index') {
+                // avoid an infinite redirect loop when already in login
+                return;
             }
+            $this->_redirector = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
+            $this->_redirector->setCode(303)
+                              ->setExit(true)
+                              ->setGotoRoute(array(), 'login', true);
         }
     }
 }
