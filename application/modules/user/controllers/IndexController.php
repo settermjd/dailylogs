@@ -35,6 +35,8 @@ class User_IndexController extends Zend_Controller_Action
                     $result = $auth->authenticate($authAdapter);
                     if (!$result->isValid()) {
                         $this->_flashMessage('Login failed');
+                        // login failure - needs to display error message!
+                        $this->view->form = $form;
                     } else {
                         $data = $authAdapter->getResultRowObject(null, 'password');
                         $auth->getStorage()->write($data);
@@ -42,7 +44,8 @@ class User_IndexController extends Zend_Controller_Action
                         return;
                     }
                 } else {
-
+                    // login failure!
+                    $this->view->form = $form;
                 }
             } else {
                 // login failure!
