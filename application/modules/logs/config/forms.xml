@@ -52,6 +52,7 @@
                         </trim>
                     </filters>
                     <class></class>
+                    <order>0</order>
                     <required>true</required>
                 </options>
             </log_date>
