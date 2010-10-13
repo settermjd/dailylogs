@@ -30,7 +30,17 @@ class User_IndexController extends Zend_Controller_Action
                 // success!
                 $formInput = $form->getValues();
                 if (!empty($formInput)) {
-
+                    $authAdapter = $this->_getAuthAdapter($formInput);
+                    $auth = Zend_Auth::getInstance();
+                    $result = $auth->authenticate($authAdapter);
+                    if (!$result->isValid()) {
+                        $this->_flashMessage('Login failed');
+                    } else {
+                        $data = $authAdapter->getResultRowObject(null, 'password');
+                        $auth->getStorage()->write($data);
+                        $this->_redirect($this->_redirectUrl);
+                        return;
+                    }
                 } else {
 
                 }
@@ -54,6 +64,30 @@ class User_IndexController extends Zend_Controller_Action
     public function updatePasswordAction()
     {
         // action body
+    }
+
+    protected function _getAuthAdapter($formData)
+    {
+        $dbAdapter = Zend_Registry::get('db');
+        $config = Zend_Registry::get('config');
+        $password = $formData['password'];
+        $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
+
+        $authAdapter->setTableName('users')
+                    ->setIdentityColumn('username')
+                    ->setCredentialColumn('password')
+                    ->setCredentialTreatment('MD5(?)')
+                    ->setIdentity($formData['username'])
+                    ->setCredential($password);
+
+        return $authAdapter;
+    }
+
+    protected function _flashMessage($message)
+    {
+        $flashMessenger = $this->_helper->FlashMessenger;
+        $flashMessenger->setNamespace('actionErrors');
+        $flashMessenger->addMessage($message);
     }
 
 }
