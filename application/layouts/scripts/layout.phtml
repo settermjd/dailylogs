@@ -5,23 +5,29 @@ print $this->doctype('HTML5'); //HTML5 doctype is backwards compatible and there
 ?>
 <html lang="en-GB">
     <head>
-    <!-- Meta -->
-    <meta http-equiv="X-UA-Compatible" content="IE=8" />
-    <link rel="icon" href="/icon.ico" type="image/x-icon" />
-    <?php echo $this->headMeta(); ?>
-    <?php echo $this->headTitle(); ?>
-    <!-- /Meta -->
+        <meta http-equiv="X-UA-Compatible" content="IE=8" />
+        <link rel="icon" href="/icon.ico" type="image/x-icon" />
+        <?php print $this->headMeta(); ?>
+        <?php print $this->headTitle(); ?>
+        <!-- /#Meta -->
 
-    <!-- CSS -->
-    <?php ?>
-    <!-- /CSS -->
+        <!-- /css -->
+        <?php
+            print $this->headLink()->prependStylesheet('/css/main.css')
+        ?>
+        <!-- /#css -->
     </head>
     <body>
         <div id="wrapper">
-            <?php echo $this->partial('common/header.phtml'); ?>
-            <?php echo $this->partial('common/navigation.phtml'); ?>
-            <?php echo $this->layout()->content; ?>
-        </div><!-- /#wrapper -->
-        <?php echo $this->partial('common/footer.phtml'); ?>
+            <?php print $this->partial('common/header.phtml'); ?>
+            <div id="content">
+                <?php print $this->partial('common/navigation.phtml'); ?>
+                <div id="body">
+                    <?php print $this->layout()->content; ?>
+                </div>
+            </div>
+        </div>
+        <!-- /#wrapper -->
+        <?php print $this->partial('common/footer.phtml'); ?>
     </body>
 </html>

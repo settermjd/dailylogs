@@ -1,0 +1,23 @@
+@CHARSET "UTF-8";
+
+body {
+    font-family: "Lucida Grande";
+}
+
+#header, #footer, #content {
+    clear: both;
+}
+
+div#navigation {
+    float: left;
+    width: 190px;
+}
+
+div#body {
+    float: left;
+    width: 80%;	
+}
+
+div#navigation {
+    margin-right: 40px;
+}
