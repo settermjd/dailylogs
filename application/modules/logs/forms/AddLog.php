@@ -1,6 +1,6 @@
 <?php
 
-class logs_Form_AddLog extends Zend_Form
+class Logs_Form_AddLog extends Zend_Form
 {
 
     public function init()

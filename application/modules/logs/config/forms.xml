@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <forms>
     <addlog>
-        <action>/user/add-log</action>
+        <action>/log/add</action>
         <method>post</method>
         <id>addLogForm</id>
         <name>addLogForm</name>
@@ -9,15 +9,15 @@
             <body>
                 <type>textarea</type>
                 <options>
-                    <label>body:</label>
-                    <cols>15</cols>
-                    <rows>50</rows>
+                    <label>Log Details:</label>
+                    <cols>50</cols>
+                    <rows>15</rows>
                     <validators>
                         <notempty>
                             <validator>NotEmpty</validator>
                             <options>
                                 <messages>
-                                    <isEmpty>The log body is required</isEmpty>
+                                    <isEmpty>The log details are required</isEmpty>
                                 </messages>
                             </options>
                         </notempty>
@@ -31,16 +31,17 @@
                     <required>true</required>
                 </options>
             </body>
-            <log_date>
+            <log_date>                
                 <type>text</type>
                 <size>12</size>
                 <options>
+                    <label>Log Date:</label>
                     <validators>
                         <notempty>
                             <validator>NotEmpty</validator>
                             <options>
                                 <messages>
-                                    <isEmpty>Your password is required</isEmpty>
+                                    <isEmpty>A log date is required</isEmpty>
                                 </messages>
                             </options>
                         </notempty>                        
@@ -62,7 +63,7 @@
                             <validator>NotEmpty</validator>
                             <options>
                                 <messages>
-                                    <isEmpty>Your password is required</isEmpty>
+                                    <isEmpty>Your user id is required</isEmpty>
                                 </messages>
                             </options>
                         </notempty>                        
