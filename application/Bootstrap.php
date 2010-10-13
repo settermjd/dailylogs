@@ -132,7 +132,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $view = $layout->getView();
         $config = new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'nav');
         $navigation = new Zend_Navigation($config);
-        $view->navigation($navigation); //Zend_View_Helper_Navigation
+        $view->navigation($navigation);
         Zend_Registry::set('Zend_Navigation', $navigation);
 
         Zend_Controller_Action_HelperBroker::addHelper(

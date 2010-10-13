@@ -1,1 +1,27 @@
-<?php echo $this->layout()->content; ?>
+<?php
+$this->headMeta()->appendHttpEquiv('Content-Type', 'text/html;charset=utf-8');
+$this->headTitle()->setSeparator(' | ');
+print $this->doctype('HTML5'); //HTML5 doctype is backwards compatible and therefore safe to use.
+?>
+<html lang="en-GB">
+    <head>
+    <!-- Meta -->
+    <meta http-equiv="X-UA-Compatible" content="IE=8" />
+    <link rel="icon" href="/icon.ico" type="image/x-icon" />
+    <?php echo $this->headMeta(); ?>
+    <?php echo $this->headTitle(); ?>
+    <!-- /Meta -->
+
+    <!-- CSS -->
+    <?php ?>
+    <!-- /CSS -->
+    </head>
+    <body>
+        <div id="wrapper">
+            <?php echo $this->partial('common/header.phtml'); ?>
+            <?php echo $this->partial('common/navigation.phtml'); ?>
+            <?php echo $this->layout()->content; ?>
+        </div><!-- /#wrapper -->
+        <?php echo $this->partial('common/footer.phtml'); ?>
+    </body>
+</html>

@@ -1,360 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configdata>
     <nav>
-        <home>
-            <label>Home</label>
-            <title>Social Discount Community | Find Coupons &amp; Promotional Codes</title>
-            <route>index</route>
-            <groupname>index</groupname>
-            <!--<pages>
-                <popular>
-                    <label>Most Popular Codes</label>
-                    <controller>retailers</controller>
-                    <action>popular</action>
-                </popular>
-                <new>
-                    <label>Latest Coupon Codes</label>
-                    <controller>retailers</controller>
-                    <action>latest</action>
-                </new>
-                <free_shipping>
-                    <label>Free Shipping Codes</label>
-                    <controller>retailers</controller>
-                    <action>free-shipping</action>
-                </free_shipping>
-            </pages>-->
-        </home>
-
-        <community>
-            <label>Community</label>
-            <title>Community | Social Discount Community</title>
-            <route>community</route>
-            <groupname>community</groupname>
-            <!--<pages>
-                <page3>
-                    <label>page3</label>
-                    <uri>/page3</uri>
-                </page3>
-                <page4>
-                    <label>page4</label>
-                    <uri>/page4</uri>
-                </page4>
-            </pages>-->
-        </community>
-        <retailers>
-            <id>retailers</id>
-            <label>Retailers</label>
-            <title>Stores | Social Discount Community</title>
-            <route>retailers</route>
-            <groupname>retailers</groupname>
-            <!--<pages>
-                <page1>
-                    <label>Retailers subpage 1</label>
-                    <uri>/page1</uri>
-                </page1>
-                <page2>
-                    <label>Retailers subpage 1</label>
-                    <uri>/page2</uri>
-                </page2>
-            </pages>-->
-        </retailers>
-        <categories>
-            <id>categories</id>
-            <label>Categories</label>
-            <title>Categories | Social Discount Community</title>
-            <route>categories</route>
-            <groupname>categories</groupname>
-            <!--<pages>
-                <page3>
-                    <label>Categories subpage 1</label>
-                    <uri>/page3</uri>
-                </page3>
-                <page4>
-                    <label>Categories subpage 2</label>
-                    <uri>/page4</uri>
-                </page4>
-            </pages>-->
-        </categories>
+        <logs>
+            <id>log-management-pages</id>
+            <label>Log Management</label>
+            <title>Log Management</title>
+            <route>logs</route>
+            <groupname>logs-management</groupname>
+            <pages>
+                <list_logs>
+                    <label>My Logs</label>
+                    <uri>/logs</uri>
+                </list_logs>
+                <add_log>
+                    <label>Add Log</label>
+                    <uri>/log/add</uri>
+                </add_log>
+            </pages>
+        </logs>
         <business>
             <id>business-pages</id>
             <label>Business Pages</label>
-            <title>Business Pages | Social Discount Community</title>
-            <route>advertise</route>
+            <title>Business Pages</title>
+            <route>disclaimer</route>
             <groupname>business</groupname>
             <pages>
-                <faq>
-                    <label>FAQ</label>
-                    <uri>/faq</uri>
-                </faq>
-                <about>
-                    <label>About</label>
-                    <uri>/about-myretailcodes</uri>
-                </about>
-                <advertise>
-                    <label>Advertise</label>
-                    <uri>/advertise</uri>
-                </advertise>
                 <privacy>
                     <label>Privacy Policy</label>
                     <uri>/privacy-policy</uri>
                 </privacy>
                 <tos>
                     <label>Terms of Service</label>
-                    <uri>/tos</uri>
+                    <uri>/terms-conditions</uri>
                 </tos>
-                <contact>
-                    <label>Contact</label>
-                    <uri>/contact-us</uri>
-                </contact>
+                <disclaimer>
+                    <label>Disclaimer</label>
+                    <uri>/disclaimer</uri>
+                </disclaimer>
                 <copyright>
                     <label>Copyright</label>
                     <uri>/copyright</uri>
                 </copyright>
             </pages>
-        </business>
-        <codes>
-            <id>codes</id>
-            <label>Codes</label>
-            <title>Codes</title>
-            <route>popular-codes</route>
-            <groupname>codes</groupname>
+        </business> 
+        <general>
+            <id>general-pages</id>
+            <label>General Pages</label>
+            <title>General Pages</title>
+            <route>sitemap</route>
+            <groupname>general</groupname>
             <pages>
-                <popular>
-                    <label>Most Popular Codes</label>
-                    <uri>/popular-codes/1</uri>
-                </popular>
-                <exclusive>
-                    <label>Exclusive Codes</label>
-                    <uri>/exclusive-vouchers/1</uri>
-                </exclusive>
-                <latest>
-                    <label>Latest Codes</label>
-                    <uri>/new-codes/1</uri>
-                </latest>
-                <freeshipping>
-                    <label>Free Shipping Codes</label>
-                    <uri>/freeshipping-codes/1</uri>
-                </freeshipping>
-                
-            </pages>
-        </codes>
-        <!-- 
-        <businessPages>
-            <label>Business Pages (TEMP)</label>
-            <uri>/BusinessPages/</uri>
-
-            <pages>
-                <press>
-                    <label>Press</label>
-                    <uri>/BusinessPages/press</uri>
-                </press>
-                <faq>
-                    <label>F.A.Q.</label>
-                    <uri>/BusinessPages/faq</uri>
-                </faq>
-                <about>
-                    <label>About</label>
-                    <uri>/BusinessPages/about</uri>
-                </about>
-                <advertise>
-                    <label>Advertise</label>
-                    <uri>/BusinessPages/advertise</uri>
-                </advertise>
-                <privacypolicy>
-                    <label>Privacy Policy</label>
-                    <uri>/BusinessPages/privacy-policy</uri>
-                </privacypolicy>
-                <termsandconditions>
-                    <label>Terms and Conditions</label>
-                    <uri>/BusinessPages/terms-and-conditions</uri>
-                </termsandconditions>
                 <sitemap>
-                    <label>SiteMap</label>
-                    <uri>/BusinessPages/site-map</uri>
+                    <label>Sitemap</label>
+                    <uri>/sitemap</uri>
                 </sitemap>
-                <contactus>
-                    <label>Contact Us</label>
-                    <uri>/BusinessPages/contact-us</uri>
-                </contactus>
-                <linktous>
-                    <label>Link to Us</label>
-                    <uri>/BusinessPages/link-to-us</uri>
-                </linktous>
-                <emailsettings>
-                    <label>Email Settings</label>
-                    <uri>/BusinessPages/email-settings</uri>
-                </emailsettings>
-                <copyright>
-                    <label>Copyright</label>
-                    <uri>/BusinessPages/copyright</uri>
-                </copyright>
-            </pages>
-        </businessPages>
-
-        <Users>
-            <label>Users (TEMP)</label>
-            <uri>/user/</uri>
-
-            <pages>
-                <register>
-                    <label>Register</label>
-                    <uri>/users/register</uri>
-                </register>
-                <forgotpassword>
-                    <label>Forgot Password</label>
-                    <uri>/users/forgot-password</uri>
-                </forgotpassword>
-                <account>
-                    <label>Account</label>
-                    <uri>/users/account</uri>
-                </account>
-                <login>
-                    <label>login</label>
-                    <uri>/login</uri>
-                </login>
                 <logout>
                     <label>Logout</label>
                     <uri>/logout</uri>
                 </logout>
-                <accountdetails>
-                    <label>Account Details</label>
-                    <uri>/user/account-details</uri>
-                </accountdetails>
-                <sharecoupons>
-                    <label>Share Coupons</label>
-                    <uri>/user/share-coupons</uri>
-                </sharecoupons>
             </pages>
-        </Users> -->
+        </general>        
     </nav>
-    <admin>
-        <home>
-            <label>Dashboard</label>
-            <uri>/admin/index</uri>
-        </home>
-        <retailers>
-            <label>Retailers</label>
-            <uri>/admin/retailers</uri>
-            <pages>
-                <add>
-                    <label>Add Retailer</label>
-                    <uri>/admin/retailers/add</uri>
-                </add>
-                <list>
-                    <label>List Retailers</label>
-                    <uri>/admin/retailers</uri>
-                </list>
-            </pages>
-        </retailers>
-        <coupons>
-            <label>Coupons</label>
-            <uri>/admin/coupons</uri>
-            <pages>
-                <add>
-                    <label>Add Coupon</label>
-                    <uri>/admin/coupons/add</uri>
-                </add>
-                <list>
-                    <label>List Coupon</label>
-                    <uri>/admin/coupons</uri>
-                </list>
-            </pages>
-        </coupons>
-        <comments>
-            <label>Comments</label>
-            <uri>/admin/comments</uri>
-            <pages>
-                <add>
-                    <label>Add Comment</label>
-                    <uri>/admin/comments/add</uri>
-                </add>
-                <list>
-                    <label>List Comments</label>
-                    <uri>/admin/comments</uri>
-                </list>
-            </pages>
-        </comments>
-        <categories>
-            <label>Categories</label>
-            <uri>/admin/categories</uri>
-            <pages>
-                <add>
-                    <label>Add Category</label>
-                    <uri>/admin/categories/add</uri>
-                </add>
-                <list>
-                    <label>List Categories</label>
-                    <uri>/admin/categories</uri>
-                </list>
-            </pages>
-        </categories>
-        <!--
-        <press>
-            <label>Press</label>
-            <uri>/admin/press</uri>
-            <pages>
-                <add>
-                    <label>Add Press article</label>
-                    <uri>/admin/press/add</uri>
-                </add>
-                <list>
-                    <label>List Press articles</label>
-                    <uri>/admin/press</uri>
-                </list>
-            </pages>
-        </press>
-        -->
-        <users>
-            <label>Users</label>
-            <uri>/admin/users</uri>
-            <pages>
-                <add>
-                    <label>Add User</label>
-                    <uri>/admin/users/add</uri>
-                </add>
-                <list>
-                    <label>List Users</label>
-                    <uri>/admin/users</uri>
-                </list>
-            </pages>
-        </users>
-        <permissions>
-            <label>User Permissions</label>
-            <uri>/admin/permissions</uri>
-            <pages>
-                <usersgroup>
-                    <label>Groups</label>
-                    <uri></uri>
-                    <pages>
-                        <list>
-                            <label>List Groups</label>
-                            <uri>/admin/users-groups</uri>
-                        </list>
-                        <add>
-                            <label>Add Group</label>
-                            <uri>/admin/users-groups/add</uri>
-                        </add>
-                    </pages>
-                </usersgroup>
-                <usersgrouppermissions>
-                    <label>Group permissions</label>
-                    <uri></uri>
-                    <pages>
-                        <list>
-                            <label>List permissions</label>
-                            <uri>/admin/users-groups-permissions</uri>
-                        </list>
-                        <add>
-                            <label>Add permission</label>
-                            <uri>/admin/users-groups-permissions/add</uri>
-                        </add>
-                    </pages>
-                </usersgrouppermissions>
-            </pages>
-        </permissions>
-        <settings>
-            <label>Settings</label>
-            <uri>/admin/settings/edit/id/1</uri>
-        </settings>
-    </admin>
 </configdata>

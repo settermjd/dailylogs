@@ -1,0 +1,4 @@
+<?php $auth = Zend_Auth::getInstance(); ?>
+<?php if ($auth->hasIdentity()): ?>
+    <?php echo $this->navigation()->menu() ?>
+<?php endif;?>
