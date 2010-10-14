@@ -31,7 +31,7 @@
                     <required>true</required>
                 </options>
             </body>
-            <log_date>                
+            <created_date>                
                 <type>text</type>
                 <size>12</size>
                 <options>
@@ -55,7 +55,7 @@
                     <order>0</order>
                     <required>true</required>
                 </options>
-            </log_date>
+            </created_date>
             <user_id>
                 <type>hidden</type>
                 <options>
@@ -143,6 +143,50 @@
                     <required>true</required>
                 </options>
             </password>
+            <log_id>
+                <type>hidden</type>
+                <options>
+                    <validators>
+                        <notempty>
+                            <validator>NotEmpty</validator>
+                            <options>
+                                <messages>
+                                    <isEmpty>The log id is required</isEmpty>
+                                </messages>
+                            </options>
+                        </notempty>                        
+                    </validators>
+                    <filters>
+                        <trim>
+                            <filter>StringTrim</filter>
+                        </trim>
+                    </filters>
+                    <class></class>
+                    <required>true</required>
+                </options>
+            </log_id>    
+            <user_id>
+                <type>hidden</type>
+                <options>
+                    <validators>
+                        <notempty>
+                            <validator>NotEmpty</validator>
+                            <options>
+                                <messages>
+                                    <isEmpty>Your user id is required</isEmpty>
+                                </messages>
+                            </options>
+                        </notempty>                        
+                    </validators>
+                    <filters>
+                        <trim>
+                            <filter>StringTrim</filter>
+                        </trim>
+                    </filters>
+                    <class></class>
+                    <required>true</required>
+                </options>
+            </user_id>                    
             <submit>
                 <type>submit</type>
                 <ignore>true</ignore>
@@ -160,41 +204,15 @@
         <id>loginForm</id>
         <name>loginForm</name>
         <elements>
-            <username>
-                <type>text</type>
+            <log_id>
+                <type>hidden</type>
                 <options>
-                    <label>username:</label>
-                    <size>40</size>
                     <validators>
                         <notempty>
                             <validator>NotEmpty</validator>
                             <options>
                                 <messages>
-                                    <isEmpty>Your username is required</isEmpty>
-                                </messages>
-                            </options>
-                        </notempty>
-                    </validators>
-                    <filters>
-                        <trim>
-                            <filter>StringTrim</filter>
-                        </trim>
-                    </filters>
-                    <class></class>
-                    <required>true</required>
-                </options>
-            </username>
-            <password>
-                <type>password</type>
-                <options>
-                    <label>password:</label>
-                    <size>40</size>
-                    <validators>
-                        <notempty>
-                            <validator>NotEmpty</validator>
-                            <options>
-                                <messages>
-                                    <isEmpty>Your password is required</isEmpty>
+                                    <isEmpty>The log id is required</isEmpty>
                                 </messages>
                             </options>
                         </notempty>                        
@@ -207,7 +225,7 @@
                     <class></class>
                     <required>true</required>
                 </options>
-            </password>
+            </log_id> 
             <submit>
                 <type>submit</type>
                 <ignore>true</ignore>
