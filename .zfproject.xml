@@ -79,6 +79,9 @@
               <actionMethod actionName="addLog"/>
               <actionMethod actionName="listLogs"/>
             </controllerFile>
+            <controllerFile controllerName="Data">
+              <actionMethod actionName="index"/>
+            </controllerFile>
           </controllersDirectory>
           <formsDirectory>
             <formFile formName="AddLog"/>
@@ -101,6 +104,9 @@
               </viewControllerScriptsDirectory>
               <viewControllerScriptsDirectory forControllerName="Index">
                 <viewScriptFile forActionName="listLogs"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Data">
+                <viewScriptFile forActionName="index"/>
               </viewControllerScriptsDirectory>
             </viewScriptsDirectory>
             <viewHelpersDirectory/>
@@ -210,6 +216,7 @@
           <testApplicationControllerFile filesystemName="IndexControllerTest.php"/>
           <testApplicationControllerFile filesystemName="ErrorControllerTest.php"/>
           <testApplicationControllerFile filesystemName="IndexControllerTest.php"/>
+          <testApplicationControllerFile filesystemName="DataControllerTest.php"/>
         </testApplicationControllerDirectory>
       </testApplicationDirectory>
       <testLibraryDirectory>
