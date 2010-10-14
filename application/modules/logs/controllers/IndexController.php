@@ -42,16 +42,12 @@ class Logs_IndexController extends Zend_Controller_Action
                 // success!
                 $formInput = $form->getValues();
                 if (!empty($formInput)) {
-                    $authAdapter = $this->_getAuthAdapter($formInput);
                     $auth = Zend_Auth::getInstance();
-                    $result = $auth->authenticate($authAdapter);
-                    if (!$result->isValid()) {
-                        $this->_flashMessage('Add Log failed');
-                        // login failure - needs to display error message!
-                        $this->view->form = $form;
-                    } else {
-
-                    }
+                    $logObj = new Logs_Model_Log();
+                    $currentLogs = $logObj->addLog(
+                        $auth->getIdentity()->id,
+                        $formInput
+                    );
                 } else {
                     // login failure!
                     $this->view->form = $form;
@@ -65,9 +61,16 @@ class Logs_IndexController extends Zend_Controller_Action
 
     public function listLogsAction()
     {
-        // action body
+        $logObj = new Logs_Model_Log();
+        $currentLogs = $logObj->findLogs(
+            $this->_authObj->id,
+            array(
+                /*'startDate' => $startDate,
+                'endDate' => $startDate,*/
+            )
+        );
+        $this->view->logs = $currentLogs;
     }
-
 
 }
 
