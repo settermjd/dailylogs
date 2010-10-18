@@ -31,31 +31,6 @@
                     <required>true</required>
                 </options>
             </body>
-            <created_date>                
-                <type>text</type>
-                <size>12</size>
-                <options>
-                    <label>Log Date:</label>
-                    <validators>
-                        <notempty>
-                            <validator>NotEmpty</validator>
-                            <options>
-                                <messages>
-                                    <isEmpty>A log date is required</isEmpty>
-                                </messages>
-                            </options>
-                        </notempty>                        
-                    </validators>
-                    <filters>
-                        <trim>
-                            <filter>StringTrim</filter>
-                        </trim>
-                    </filters>
-                    <class></class>
-                    <order>0</order>
-                    <required>true</required>
-                </options>
-            </created_date>
             <user_id>
                 <type>hidden</type>
                 <options>
@@ -90,22 +65,23 @@
         </elements>
     </addlog>
     <editlog>
-        <action>/login</action>
+        <action>/log/edit</action>
         <method>post</method>
-        <id>loginForm</id>
-        <name>loginForm</name>
+        <id>editLogForm</id>
+        <name>editLogForm</name>
         <elements>
-            <username>
-                <type>text</type>
+            <body>
+                <type>textarea</type>
                 <options>
-                    <label>username:</label>
-                    <size>40</size>
+                    <label>Log Details:</label>
+                    <cols>50</cols>
+                    <rows>15</rows>
                     <validators>
                         <notempty>
                             <validator>NotEmpty</validator>
                             <options>
                                 <messages>
-                                    <isEmpty>Your username is required</isEmpty>
+                                    <isEmpty>The log details are required</isEmpty>
                                 </messages>
                             </options>
                         </notempty>
@@ -118,53 +94,7 @@
                     <class></class>
                     <required>true</required>
                 </options>
-            </username>
-            <password>
-                <type>password</type>
-                <options>
-                    <label>password:</label>
-                    <size>40</size>
-                    <validators>
-                        <notempty>
-                            <validator>NotEmpty</validator>
-                            <options>
-                                <messages>
-                                    <isEmpty>Your password is required</isEmpty>
-                                </messages>
-                            </options>
-                        </notempty>                        
-                    </validators>
-                    <filters>
-                        <trim>
-                            <filter>StringTrim</filter>
-                        </trim>
-                    </filters>
-                    <class></class>
-                    <required>true</required>
-                </options>
-            </password>
-            <log_id>
-                <type>hidden</type>
-                <options>
-                    <validators>
-                        <notempty>
-                            <validator>NotEmpty</validator>
-                            <options>
-                                <messages>
-                                    <isEmpty>The log id is required</isEmpty>
-                                </messages>
-                            </options>
-                        </notempty>                        
-                    </validators>
-                    <filters>
-                        <trim>
-                            <filter>StringTrim</filter>
-                        </trim>
-                    </filters>
-                    <class></class>
-                    <required>true</required>
-                </options>
-            </log_id>    
+            </body>
             <user_id>
                 <type>hidden</type>
                 <options>
@@ -186,25 +116,8 @@
                     <class></class>
                     <required>true</required>
                 </options>
-            </user_id>                    
-            <submit>
-                <type>submit</type>
-                <ignore>true</ignore>
-                <options>
-                    <label>Submit</label>
-                    <class>viewall</class>
-                    <order>4</order>
-                </options>
-            </submit>
-        </elements>
-    </editlog>  
-    <deletelog>
-        <action>/login</action>
-        <method>post</method>
-        <id>loginForm</id>
-        <name>loginForm</name>
-        <elements>
-            <log_id>
+            </user_id>
+            <id>
                 <type>hidden</type>
                 <options>
                     <validators>
@@ -225,7 +138,7 @@
                     <class></class>
                     <required>true</required>
                 </options>
-            </log_id> 
+            </id>
             <submit>
                 <type>submit</type>
                 <ignore>true</ignore>
@@ -235,6 +148,74 @@
                     <order>4</order>
                 </options>
             </submit>
+        </elements>
+    </editlog>  
+    <deletelog>
+        <action>/log/delete</action>
+        <method>post</method>
+        <id>deleteLogForm</id>
+        <name>deleteLogForm</name>
+        <elements>
+            <id>
+                <type>hidden</type>
+                <options>
+                    <validators>
+                        <notempty>
+                            <validator>NotEmpty</validator>
+                            <options>
+                                <messages>
+                                    <isEmpty>The log id is required</isEmpty>
+                                </messages>
+                            </options>
+                        </notempty>                        
+                    </validators>
+                    <filters>
+                        <trim>
+                            <filter>StringTrim</filter>
+                        </trim>
+                    </filters>
+                    <class></class>
+                    <required>true</required>
+                </options>
+            </id> 
+            <user_id>
+                <type>hidden</type>
+                <options>
+                    <validators>
+                        <notempty>
+                            <validator>NotEmpty</validator>
+                            <options>
+                                <messages>
+                                    <isEmpty>Your user id is required</isEmpty>
+                                </messages>
+                            </options>
+                        </notempty>                        
+                    </validators>
+                    <filters>
+                        <trim>
+                            <filter>StringTrim</filter>
+                        </trim>
+                    </filters>
+                    <class></class>
+                    <required>true</required>
+                </options>
+            </user_id>            
+            <submit>
+                <type>submit</type>
+                <ignore>no</ignore>
+                <value>yes</value>
+                <options>
+                    <label>Delete</label>
+                </options>
+            </submit>
+            <reset>
+                <type>submit</type>
+                <ignore>no</ignore>
+                <value>no</value>
+                <options>
+                    <label>DON'T Delete</label>
+                </options>
+            </reset>            
         </elements>
     </deletelog> 
 </forms>

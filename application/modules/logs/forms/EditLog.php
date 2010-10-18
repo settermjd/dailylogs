@@ -1,6 +1,6 @@
 <?php
 
-class logs_Form_EditLog extends Zend_Form
+class Logs_Form_EditLog extends ZendX_JQuery_Form
 {
 
     public function init()

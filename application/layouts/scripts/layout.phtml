@@ -13,9 +13,12 @@ print $this->doctype('HTML5'); //HTML5 doctype is backwards compatible and there
 
         <!-- /css -->
         <?php
-            print $this->headLink()->prependStylesheet('/css/main.css')
+            print $this->headLink()
+                       ->prependStylesheet('/css/main.css')
+                       ->prependStylesheet('/css/jquery-ui.css');
         ?>
         <!-- /#css -->
+        <?php print $this->jQuery(); ?>
     </head>
     <body>
         <div id="wrapper">

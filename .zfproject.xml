@@ -78,6 +78,7 @@
               <actionMethod actionName="index"/>
               <actionMethod actionName="addLog"/>
               <actionMethod actionName="listLogs"/>
+              <actionMethod actionName="editLog"/>
             </controllerFile>
             <controllerFile controllerName="Data">
               <actionMethod actionName="index"/>
@@ -107,6 +108,9 @@
               </viewControllerScriptsDirectory>
               <viewControllerScriptsDirectory forControllerName="Data">
                 <viewScriptFile forActionName="index"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Index">
+                <viewScriptFile forActionName="editLog"/>
               </viewControllerScriptsDirectory>
             </viewScriptsDirectory>
             <viewHelpersDirectory/>
