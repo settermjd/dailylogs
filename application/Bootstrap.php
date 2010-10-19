@@ -29,6 +29,45 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
     }
 
+    protected function _initAcls()
+    {
+        $acl = new Zend_Acl();
+
+        $acl->addRole(new Zend_Acl_Role('guest'));
+        $acl->addRole(new Zend_Acl_Role('developer', 'guest'));
+        $acl->addRole(new Zend_Acl_Role('manager', 'guest'));
+
+        $moduleResource = new Zend_Acl_Resource('logs');
+        $acl->add($moduleResource)
+            ->add(new Zend_Acl_Resource('logs:index'), $moduleResource)
+            ->add(new Zend_Acl_Resource('default:index'), $moduleResource);
+
+        $acl->allow(
+            array('developer'),
+            'logs:index',
+            array('add-log', 'edit-log', 'delete-log', 'list-logs')
+        );
+
+        $acl->allow(
+            array('manager'),
+            'logs:index',
+            array('user')
+        );
+
+        $acl->allow(null, 'default:index');
+
+        Zend_Registry::set('acl', $acl);
+
+        $front = Zend_Controller_Front::getInstance();
+
+        // add the auth setup plugin
+        $front->registerPlugin(
+            new Common_Controller_Plugin_Acl()
+        );
+
+        return $acl;
+    }
+
     /*
     protected function _initZFDebug()
     {
@@ -139,7 +178,41 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      */
     protected function _initCache()
     {
+        $this->bootstrap('Config');
+        $appConfig = Zend_Registry::get('config');
+        $cache = NULL;
 
+        // only attempt to init the cache if turned on
+        if ($appConfig->app->caching) {
+
+            // get the cache settings
+            $config = $appConfig->app->cache;
+
+            if (NULL !== $this->_tmpFolder) {
+                if ('File' == $config->backend->adapter && !isset($config->backend->options->cache_dir)) {
+                    $config->backend->options->cache_dir = $this->_tmpFolder . '/cache';
+                    if (!is_dir($config->backend->options->cache_dir)) {
+                        mkdir($config->backend->options->cache_dir);
+                    }
+                }
+            }
+
+            try {
+                $cache = Zend_Cache::factory(
+                        $config->frontend->adapter,
+                        $config->backend->adapter,
+                        $config->frontend->options->toArray(),
+                        $config->backend->options->toArray()
+                );
+                Zend_Registry::set('cache', $cache);
+                return $cache;
+            } catch (Zend_Cache_Exception $e) {
+                // send email to alert caching failed
+                Zend_Registry::get('log')->alert(
+                        'Caching failed: adapter=' . $config->backend->adapter . ', message=' . $e->getMessage(
+                ));
+            }
+        }
     }
 
     protected function _initNavigation()
@@ -155,6 +228,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         Zend_Controller_Action_HelperBroker::addHelper(
             new Common_Controller_Action_Helper_NavigationManager()
         );
+
+        $this->bootstrap('log');
+        $logger = $this->getResource('log');
+        $logger->log('Initialised Navigation', Zend_Log::INFO);
 
         return $navigation;
     }
@@ -190,6 +267,5 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             'common/default_pagination.phtml'
         );
     }
-
 }
 
