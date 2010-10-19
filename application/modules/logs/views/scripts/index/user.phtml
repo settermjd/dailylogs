@@ -1,0 +1,39 @@
+<h2><?php print $this->translate('User Logs'); ?></h2>
+<?php if (!empty($this->messages)): ?>
+    <?php foreach($this->messages as $message): ?>
+        <?php print $message; ?>
+    <?php endforeach; ?>
+<?php endif; ?>
+<table width="100%" summary="Daily logs for <?php print ucwords($this->authUser->firstname . ' ' . $this->authUser->lastname); ?>">
+    <thead>
+        <tr align="left">
+            <th><?php print $this->translate('Log Date'); ?></th>
+            <th><?php print $this->translate('Body'); ?></th>
+            <td>&nbsp;</td>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr align="left">
+            <th colspan="3"><?php print count($this->logs) . $this->translate(' records'); ?></th>
+        </tr>
+    </tfoot>
+    <tbody>
+    <?php if (count($this->logs) > 0): ?>
+        <?php foreach ($this->logs as $log): ?>
+            <?php
+                $createdDate = new Zend_Date($log->created_date, 'dd.MM.yyyy');
+            ?>
+            <tr>
+                <td><?php print $createdDate->get(Zend_Date::DATE_MEDIUM); ?></td>
+                <td><?php print $log->logsummary; ?></td>
+                <td>
+                    <a href='<?php print $this->url(array('id' => $log->id), 'log-edit-default'); ?>'
+                        title=''><?php print $this->translate('edit'); ?></a> |
+                    <a href='<?php print $this->url(array('logid' => $log->id), 'log-delete'); ?>'
+                        title=''><?php print $this->translate('delete'); ?></a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    <?php endif; ?>
+    </tbody>
+</table>
