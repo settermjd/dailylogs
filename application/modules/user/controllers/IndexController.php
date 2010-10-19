@@ -2,10 +2,19 @@
 
 class User_IndexController extends Zend_Controller_Action
 {
+    protected $_authObj = null;
+
+    protected $_flashMessenger = null;
+
+    protected $_redirector = null;
 
     public function init()
     {
         /* Initialize action controller here */
+        $auth = Zend_Auth::getInstance();
+        $this->_authObj = $auth->getStorage()->read();
+        $this->_flashMessenger = $this->_helper->getHelper('FlashMessenger');
+        $this->_redirector = $this->_helper->getHelper('Redirector');
     }
 
     public function indexAction()
@@ -16,7 +25,13 @@ class User_IndexController extends Zend_Controller_Action
     protected function _getForm()
     {
         $config = new Zend_Config_Xml(APPLICATION_PATH . '/modules/user/config/forms.xml', 'login');
-                return new User_Form_Login($config);
+        return new User_Form_Login($config);
+    }
+
+    protected function _getUpdateProfileForm()
+    {
+        $config = new Zend_Config_Xml(APPLICATION_PATH . '/modules/user/config/forms.xml', 'profile');
+        return new User_Form_UpdateProfile($config);
     }
 
     public function loginAction()
@@ -63,7 +78,31 @@ class User_IndexController extends Zend_Controller_Action
 
     public function updateProfileAction()
     {
-        // action body
+        $form = $this->_getUpdateProfileForm();
+        $form->populate((array)Zend_Auth::getInstance()->getIdentity());
+        $this->view->messages = $this->_flashMessenger->getMessages();
+
+        if (!$this->getRequest()->isPost()) {
+            $this->view->form = $form;
+        } else {
+            if ($form->isValid($_POST)) {
+                // success!
+                $formInput = $form->getValues();
+                if (!empty($formInput)) {
+                    $this->_updateProfile($formInput);
+                    $this->_flashMessenger->addMessage('Profile successfully updated');
+                    $this->_redirector->setCode(303)
+                          ->setExit(true)
+                          ->setGotoSimple("update-profile");
+                } else {
+                    // login failure!
+                    $this->view->form = $form;
+                }
+            } else {
+                // login failure!
+                $this->view->form = $form;
+            }
+        }
     }
 
     public function updatePasswordAction()
@@ -74,18 +113,18 @@ class User_IndexController extends Zend_Controller_Action
     protected function _getAuthAdapter($formData)
     {
         $dbAdapter = Zend_Registry::get('db');
-                $config = Zend_Registry::get('config');
-                $password = $formData['password'];
-                $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
+        $config = Zend_Registry::get('config');
+        $password = $formData['password'];
+        $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
 
-                $authAdapter->setTableName('users')
-                            ->setIdentityColumn('username')
-                            ->setCredentialColumn('password')
-                            ->setCredentialTreatment('MD5(?)')
-                            ->setIdentity($formData['username'])
-                            ->setCredential($password);
+        $authAdapter->setTableName('users')
+                    ->setIdentityColumn('username')
+                    ->setCredentialColumn('password')
+                    ->setCredentialTreatment('MD5(?)')
+                    ->setIdentity($formData['username'])
+                    ->setCredential($password);
 
-                return $authAdapter;
+        return $authAdapter;
     }
 
     protected function _flashMessage($message)
@@ -102,6 +141,20 @@ class User_IndexController extends Zend_Controller_Action
         $this->view->messages = $flashMessenger->getMessages();
     }
 
+    protected function _updateProfile($formInput)
+    {
+        $userObj = new User_Model_User();
+        $updateStatus = $userObj->update(
+            $formInput,
+            $userObj->getAdapter()->quoteInto('id = ?', $formInput['id'])
+        );
+        if ($updateStatus == 1) {
+            $auth = Zend_Auth::getInstance()->getIdentity();
+            foreach($formInput as $key => $value) {
+                $auth->$key = $value;
+            }
+        }
+    }
 
 }
 

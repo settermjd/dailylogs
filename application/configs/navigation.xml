@@ -76,10 +76,14 @@
             <route>login</route>
             <groupname>user</groupname>
             <pages>
+                <update_profile>
+                    <label>My Profile</label>
+                    <uri>/profile</uri>
+                </update_profile>
                 <logout>
                     <label>Logout</label>
                     <uri>/logout</uri>
-                </logout>
+                </logout>                
             </pages>
         </user>        
     </nav>
