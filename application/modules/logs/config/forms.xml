@@ -6,11 +6,35 @@
         <id>addLogForm</id>
         <name>addLogForm</name>
         <elements>
-            <body>
+            <logsummary>
+                <type>text</type>
+                <options>
+                    <label>Log Summary:</label>                    
+                    <size>50</size>
+                    <validators>
+                        <notempty>
+                            <validator>NotEmpty</validator>
+                            <options>
+                                <messages>
+                                    <isEmpty>The log summary is required</isEmpty>
+                                </messages>
+                            </options>
+                        </notempty>
+                    </validators>
+                    <filters>
+                        <trim>
+                            <filter>StringTrim</filter>
+                        </trim>
+                    </filters>
+                    <class></class>
+                    <required>true</required>
+                </options>
+            </logsummary>        
+            <logbody>
                 <type>textarea</type>
                 <options>
                     <label>Log Details:</label>
-                    <cols>50</cols>
+                    <cols>70</cols>
                     <rows>15</rows>
                     <validators>
                         <notempty>
@@ -30,7 +54,7 @@
                     <class></class>
                     <required>true</required>
                 </options>
-            </body>
+            </logbody>
             <user_id>
                 <type>hidden</type>
                 <options>
@@ -57,7 +81,7 @@
                 <type>submit</type>
                 <ignore>true</ignore>
                 <options>
-                    <label>Submit</label>
+                    <label>Submit</label>                    
                     <class>viewall</class>
                     <order>4</order>
                 </options>
@@ -70,7 +94,31 @@
         <id>editLogForm</id>
         <name>editLogForm</name>
         <elements>
-            <body>
+            <logsummary>
+                <type>text</type>
+                <options>
+                    <label>Log Summary:</label>                    
+                    <size>70</size>
+                    <validators>
+                        <notempty>
+                            <validator>NotEmpty</validator>
+                            <options>
+                                <messages>
+                                    <isEmpty>The log summary is required</isEmpty>
+                                </messages>
+                            </options>
+                        </notempty>
+                    </validators>
+                    <filters>
+                        <trim>
+                            <filter>StringTrim</filter>
+                        </trim>
+                    </filters>
+                    <class></class>
+                    <required>true</required>
+                </options>
+            </logsummary>        
+            <logbody>
                 <type>textarea</type>
                 <options>
                     <label>Log Details:</label>
@@ -94,7 +142,7 @@
                     <class></class>
                     <required>true</required>
                 </options>
-            </body>
+            </logbody>
             <user_id>
                 <type>hidden</type>
                 <options>
@@ -128,7 +176,17 @@
                                     <isEmpty>The log id is required</isEmpty>
                                 </messages>
                             </options>
-                        </notempty>                        
+                        </notempty>
+                        <userid_exists>
+                            <validator>Db_RecordExists</validator>
+                            <options>
+                                <table>logs</table>
+                                <field>id</field>
+                                <messages>
+                                    <noRecordFound>The log id doesn't exist</noRecordFound>
+                                </messages>
+                            </options>
+                        </userid_exists>                         
                     </validators>
                     <filters>
                         <trim>

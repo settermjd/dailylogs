@@ -2,14 +2,19 @@
 
 class Logs_IndexController extends Zend_Controller_Action
 {
+
     protected $_authObj = null;
+
     protected $_flashMessenger = null;
+
+    protected $_cache = null;
 
     public function init()
     {
         /* Initialize action controller here */
         $auth = Zend_Auth::getInstance();
         $this->_authObj = $auth->getStorage()->read();
+        $this->_cache = Zend_Registry::get('cache');
         $this->_flashMessenger = $this->_helper->getHelper('FlashMessenger');
     }
 
@@ -40,6 +45,8 @@ class Logs_IndexController extends Zend_Controller_Action
             )
         );
 
+        $this->view->ckeditor = true;
+
         return $form;
     }
 
@@ -60,8 +67,6 @@ class Logs_IndexController extends Zend_Controller_Action
 
         $form->addElement($createdDate);
 
-        //var_dump($this->getRequest()->getParam('logid')); exit;
-
         $userLog = $logObj->getLog(
             $this->getRequest()->getParam('id'),
             $this->_authObj->id
@@ -79,6 +84,8 @@ class Logs_IndexController extends Zend_Controller_Action
         if(!empty($userLog)) {
             $formData = array_merge($formData, $userLog->toArray());
         }
+
+        $this->view->ckeditor = true;
 
         // populate with default information
         $form->populate($formData);
@@ -104,8 +111,28 @@ class Logs_IndexController extends Zend_Controller_Action
 
     public function listLogsAction()
     {
-        $logObj = new Logs_Model_Log();
-        $currentLogs = $logObj->findLogs($this->_authObj->id);
+        if ($this->_cache) {
+            if ($this->_cache->test('_listlogs_' . $this->_authObj->id)) {
+                $currentLogs = $this->_cache->load('_listlogs_' . $this->_authObj->id);
+            } else {
+                $logObj = new Logs_Model_Log();
+                $currentLogs = $logObj->findLogs($this->_authObj->id);
+                $this->_cache->save(
+                    $currentLogs,
+                    '_listlogs_' . $this->_authObj->id,
+                    array(
+                        $this->_authObj->id,
+                        $this->_authObj->username
+                    )
+                );
+            }
+        } else {
+            $logObj = new Logs_Model_Log();
+            $currentLogs = $logObj->findLogs($this->_authObj->id);
+        }
+
+        Common_Util_Logger::writeLog('Listing logs for: [username]: ' . $this->_authObj->username, Zend_Log::INFO);
+
         $this->view->logs = $currentLogs;
         $this->view->authUser = $this->_authObj;
         $this->view->messages = $this->_flashMessenger->getMessages();
@@ -122,12 +149,16 @@ class Logs_IndexController extends Zend_Controller_Action
                 // success!
                 $formInput = $form->getValues();
                 if (!empty($formInput)) {
-                    $auth = Zend_Auth::getInstance();
                     $logObj = new Logs_Model_Log();
                     $currentLogs = $logObj->editLog(
-                        $auth->getIdentity()->id,
+                        $this->_authObj->id,
                         $formInput
                     );
+                    Common_Util_Logger::writeLog(
+                        'Deleted log id: ' . $formInput['id'] . ' for: [username]: ' . $this->_authObj->username,
+                        Zend_Log::INFO
+                    );
+                    $this->_clearCachedRecord('_listlogs_' . $this->_authObj->id);
                     $this->_flashMessenger->addMessage('Record successfully updated');
                     $this->_forward('list-logs');
                 } else {
@@ -147,16 +178,18 @@ class Logs_IndexController extends Zend_Controller_Action
             $this->view->form = $form;
         } else {
             if ($form->isValid($_POST)) {
-                // success!
                 $formInput = $form->getValues();
-
                 if (!is_null($form->getValue('submit'))) {
-                    $auth = Zend_Auth::getInstance();
                     $logObj = new Logs_Model_Log();
                     $currentLogs = $logObj->deleteLog(
-                        $auth->getIdentity()->id,
+                        $this->_authObj->id,
                         $formInput['id']
                     );
+                    Common_Util_Logger::writeLog(
+                        'Deleted log id: ' . $formInput['id'] . ' for: [username]: ' . $this->_authObj->username,
+                        Zend_Log::INFO
+                    );
+                    $this->_clearCachedRecord('_listlogs_' . $this->_authObj->id);
                     $this->_forward('list-logs');
                 } else {
                     $this->_forward('list-logs');
@@ -184,6 +217,11 @@ class Logs_IndexController extends Zend_Controller_Action
                         $auth->getIdentity()->id,
                         $formInput
                     );
+                    Common_Util_Logger::writeLog(
+                        'Added log id: ' . $currentLogs . ' for: [username]: ' . $this->_authObj->username,
+                        Zend_Log::INFO
+                    );
+                    $this->_clearCachedRecord('_listlogs_' . $this->_authObj->id);
                     $this->_forward('list-logs');
                 } else {
                     $this->view->form = $form;
@@ -193,7 +231,33 @@ class Logs_IndexController extends Zend_Controller_Action
             }
         }
     }
+
+    public function userAction()
+    {
+        $logObj = new Logs_Model_Log();
+        $username = $this->_request->getParam('username', '');
+        $currentLogs = NULL;
+
+        if (!empty($username)) {
+            $currentLogs = $logObj->findLogsByUsername($username);
+        }
+        $this->view->logs = $currentLogs;
+        $this->view->authUser = $this->_authObj;
+        $this->view->messages = $this->_flashMessenger->getMessages();
+    }
+
+    protected function _clearCachedRecord($cacheId)
+    {
+        if ($this->_cache) {
+            if ($this->_cache->test($cacheId)) {
+                $this->_cache->remove($cacheId);
+            }
+        }
+    }
+
 }
+
+
 
 
 

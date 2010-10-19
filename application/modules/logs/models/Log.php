@@ -44,12 +44,30 @@ class Logs_Model_Log extends Zend_Db_Table
 
     public function findLogs($userId, $logOptions=array())
     {
-        $select = $this->select()->order('created_date DeSC');
+        $select = $this->select()->order('created_date DESC');
         foreach($logOptions as $key => $value) {
             $select->where("$key = ?", $value);
         }
+        return $this->fetchAll($select);
+    }
+
+    public function findLogsByUsername($userName)
+    {
+        $select = $this->select(Zend_Db_Table::SELECT_WITH_FROM_PART)->setIntegrityCheck(false)
+                    ->join(
+                        "users",
+                        "users.id = $this->_name.user_id",
+                        array('id', 'username', 'firstname', 'lastname', 'email')
+                    )
+                    ->where("users.username = ?", $userName)
+                    ->order('created_date DESC');
 
         return $this->fetchAll($select);
+    }
+
+    protected function getCacheIdTag($idTag)
+    {
+
     }
 }
 
