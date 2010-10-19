@@ -136,9 +136,12 @@
           </controllersDirectory>
           <formsDirectory>
             <formFile formName="Login"/>
+            <formFile formName="UpdateProfile"/>
           </formsDirectory>
           <layoutsDirectory enabled="false"/>
-          <modelsDirectory/>
+          <modelsDirectory>
+            <modelFile modelName="User"/>
+          </modelsDirectory>
           <viewsDirectory>
             <viewScriptsDirectory>
               <viewControllerScriptsDirectory forControllerName="Index">
