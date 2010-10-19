@@ -16,7 +16,7 @@ class User_IndexController extends Zend_Controller_Action
     protected function _getForm()
     {
         $config = new Zend_Config_Xml(APPLICATION_PATH . '/modules/user/config/forms.xml', 'login');
-        return new User_Form_Login($config);
+                return new User_Form_Login($config);
     }
 
     public function loginAction()
@@ -74,18 +74,18 @@ class User_IndexController extends Zend_Controller_Action
     protected function _getAuthAdapter($formData)
     {
         $dbAdapter = Zend_Registry::get('db');
-        $config = Zend_Registry::get('config');
-        $password = $formData['password'];
-        $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
+                $config = Zend_Registry::get('config');
+                $password = $formData['password'];
+                $authAdapter = new Zend_Auth_Adapter_DbTable($dbAdapter);
 
-        $authAdapter->setTableName('users')
-                    ->setIdentityColumn('username')
-                    ->setCredentialColumn('password')
-                    ->setCredentialTreatment('MD5(?)')
-                    ->setIdentity($formData['username'])
-                    ->setCredential($password);
+                $authAdapter->setTableName('users')
+                            ->setIdentityColumn('username')
+                            ->setCredentialColumn('password')
+                            ->setCredentialTreatment('MD5(?)')
+                            ->setIdentity($formData['username'])
+                            ->setCredential($password);
 
-        return $authAdapter;
+                return $authAdapter;
     }
 
     protected function _flashMessage($message)
@@ -95,4 +95,13 @@ class User_IndexController extends Zend_Controller_Action
         $flashMessenger->addMessage($message);
     }
 
+    public function accessDeniedAction()
+    {
+        // action body
+        $flashMessenger = $this->_helper->getHelper('FlashMessenger');
+        $this->view->messages = $flashMessenger->getMessages();
+    }
+
+
 }
+

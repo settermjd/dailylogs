@@ -1,0 +1,6 @@
+<h2><?php print $this->translate('Access Denied'); ?></h2>
+<?php if (!empty($this->messages)): ?>
+    <?php foreach($this->messages as $message): ?>
+        <?php print $message; ?>
+    <?php endforeach; ?>
+<?php endif; ?>
