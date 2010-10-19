@@ -18,6 +18,19 @@
                 </add_log>
             </pages>
         </logs>
+        <manager>
+            <id>manager-pages</id>
+            <label>Manager Pages</label>
+            <title>Manager Pages</title>
+            <route>logs</route>
+            <groupname>manager_routes</groupname>
+            <pages>
+                <add_log>
+                    <label>User Logs</label>
+                    <uri>/logs/user</uri>
+                </add_log>
+            </pages>
+        </manager>        
         <business>
             <id>business-pages</id>
             <label>Business Pages</label>
@@ -54,11 +67,20 @@
                     <label>Sitemap</label>
                     <uri>/sitemap</uri>
                 </sitemap>
+            </pages>
+        </general>        
+        <user>
+            <id>user-pages</id>
+            <label>User Pages</label>
+            <title>User Pages</title>
+            <route>login</route>
+            <groupname>user</groupname>
+            <pages>
                 <logout>
                     <label>Logout</label>
                     <uri>/logout</uri>
                 </logout>
             </pages>
-        </general>        
+        </user>        
     </nav>
 </configdata>

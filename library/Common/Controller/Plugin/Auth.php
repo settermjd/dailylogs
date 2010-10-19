@@ -5,7 +5,7 @@
  */
 class Common_Controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
 {
-    private $_redirector = NULL;
+    protected $_redirector = NULL;
 
     /**
      * Authenticate all requests to the service
@@ -15,7 +15,7 @@ class Common_Controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
         $auth = Zend_Auth::getInstance();
-        if (!$auth->hasIdentity()) {
+        if (!($auth instanceof Zend_Auth) || !$auth->hasIdentity()) {
             if ($request->getModuleName() == 'user' && $request->getControllerName() == 'index') {
                 // avoid an infinite redirect loop when already in login
                 return;

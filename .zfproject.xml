@@ -79,6 +79,7 @@
               <actionMethod actionName="addLog"/>
               <actionMethod actionName="listLogs"/>
               <actionMethod actionName="editLog"/>
+              <actionMethod actionName="user"/>
             </controllerFile>
             <controllerFile controllerName="Data">
               <actionMethod actionName="index"/>
@@ -112,6 +113,9 @@
               <viewControllerScriptsDirectory forControllerName="Index">
                 <viewScriptFile forActionName="editLog"/>
               </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Index">
+                <viewScriptFile forActionName="user"/>
+              </viewControllerScriptsDirectory>
             </viewScriptsDirectory>
             <viewHelpersDirectory/>
             <viewFiltersDirectory/>
@@ -127,6 +131,7 @@
               <actionMethod actionName="logout"/>
               <actionMethod actionName="updateProfile"/>
               <actionMethod actionName="updatePassword"/>
+              <actionMethod actionName="accessDenied"/>
             </controllerFile>
           </controllersDirectory>
           <formsDirectory>
@@ -150,6 +155,9 @@
               </viewControllerScriptsDirectory>
               <viewControllerScriptsDirectory forControllerName="Index">
                 <viewScriptFile forActionName="updatePassword"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Index">
+                <viewScriptFile forActionName="accessDenied"/>
               </viewControllerScriptsDirectory>
             </viewScriptsDirectory>
             <viewHelpersDirectory/>

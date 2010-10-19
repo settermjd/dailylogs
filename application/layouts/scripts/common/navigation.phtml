@@ -1,6 +1,32 @@
+<?php
+    $logManagementMenu = $this->navigation()->findOneByLabel('Log Management');
+    $managerMenu = $this->navigation()->findOneByLabel('Manager Pages');
+    $userMenu = $this->navigation()->findOneByLabel('User Pages');
+?>
 <div id="navigation">
     <?php $auth = Zend_Auth::getInstance(); ?>
     <?php if ($auth->hasIdentity()): ?>
-        <?php echo $this->navigation()->menu() ?>
+    <div id="nav-header"><?php print $this->translate('Navigation'); ?></div>
+        <?php
+            switch ($auth->getIdentity()->role) {
+                case ('developer'):
+                    print $this->navigation()
+                               ->menu()
+                               ->renderMenu($logManagementMenu);
+                    break;
+                case ('manager'):
+                    print $this->navigation()
+                               ->menu()
+                               ->renderMenu($managerMenu);
+                break;
+                default:
+                    // nothing at this stage.
+            };
+
+            print $this->navigation()
+                       ->menu()
+                       ->renderMenu($userMenu);
+
+        ?>
     <?php endif;?>
 </div>

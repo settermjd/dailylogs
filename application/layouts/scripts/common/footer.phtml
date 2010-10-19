@@ -1,1 +1,30 @@
 <!-- footer template -->
+<?php
+    $generalMenu = $this->navigation()->findOneByLabel('General Pages');
+    $businessPagesMenu = $this->navigation()->findOneByLabel('Business Pages');
+?>
+<div>
+    <?php $auth = Zend_Auth::getInstance(); ?>
+    <?php if ($auth->hasIdentity()): ?>
+        <div id="nav-header"><?php print $this->translate('General Pages'); ?></div>
+        <?php
+            print $this->navigation()
+                       ->menu()
+                       ->renderMenu($generalMenu);
+        ?>
+    <?php endif;?>
+</div>
+<div>
+    <?php $auth = Zend_Auth::getInstance(); ?>
+    <?php if ($auth->hasIdentity()): ?>
+        <div id="nav-header"><?php print $this->translate('Business Pages'); ?></div>
+        <?php
+            print $this->navigation()
+                       ->menu()
+                       ->renderMenu($businessPagesMenu);
+        ?>
+    <?php endif;?>
+</div>
+<div id="copyright">
+    copyright (c) 2010 <a href='http://www.matthewsetter.com'>Matthew Setter</a>. all rights reserved.
+</div>
