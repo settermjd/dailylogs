@@ -80,6 +80,10 @@
                     <label>My Profile</label>
                     <uri>/profile</uri>
                 </update_profile>
+                <update_password>
+                    <label>Update Password</label>
+                    <uri>/update-password</uri>
+                </update_password>
                 <logout>
                     <label>Logout</label>
                     <uri>/logout</uri>

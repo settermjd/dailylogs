@@ -34,6 +34,12 @@ class User_IndexController extends Zend_Controller_Action
         return new User_Form_UpdateProfile($config);
     }
 
+    protected function _getUpdatePasswordForm()
+    {
+        $config = new Zend_Config_Xml(APPLICATION_PATH . '/modules/user/config/forms.xml', 'update_password');
+        return new User_Form_UpdatePassword($config);
+    }
+
     public function loginAction()
     {
         $form = $this->_getForm();
@@ -89,6 +95,11 @@ class User_IndexController extends Zend_Controller_Action
                 // success!
                 $formInput = $form->getValues();
                 if (!empty($formInput)) {
+                    $userObj = new User_Model_User();
+                    $updateStatus = $userObj->update(
+                        $formInput,
+                        $userObj->getAdapter()->quoteInto('id = ?', $formInput['id'])
+                    );
                     $this->_updateProfile($formInput);
                     $this->_flashMessenger->addMessage('Profile successfully updated');
                     $this->_redirector->setCode(303)
@@ -107,7 +118,36 @@ class User_IndexController extends Zend_Controller_Action
 
     public function updatePasswordAction()
     {
-        // action body
+        $form = $this->_getUpdatePasswordForm();
+        $form->populate((array)Zend_Auth::getInstance()->getIdentity());
+        $this->view->messages = $this->_flashMessenger->getMessages();
+
+        if (!$this->getRequest()->isPost()) {
+            $this->view->form = $form;
+        } else {
+            if ($form->isValid($_POST)) {
+                // success!
+                $formInput = $form->getValues();
+                if (!empty($formInput)) {
+                    $userObj = new User_Model_User();
+                    $userObj->updatePassword(
+                        $formInput['id'],
+                        $formInput['password']
+                    );
+                    $this->_updateProfile($formInput);
+                    $this->_flashMessenger->addMessage('Password successfully updated');
+                    $this->_redirector->setCode(303)
+                          ->setExit(true)
+                          ->setGotoSimple("logout");
+                } else {
+                    // login failure!
+                    $this->view->form = $form;
+                }
+            } else {
+                // login failure!
+                $this->view->form = $form;
+            }
+        }
     }
 
     protected function _getAuthAdapter($formData)
@@ -143,11 +183,6 @@ class User_IndexController extends Zend_Controller_Action
 
     protected function _updateProfile($formInput)
     {
-        $userObj = new User_Model_User();
-        $updateStatus = $userObj->update(
-            $formInput,
-            $userObj->getAdapter()->quoteInto('id = ?', $formInput['id'])
-        );
         if ($updateStatus == 1) {
             $auth = Zend_Auth::getInstance()->getIdentity();
             foreach($formInput as $key => $value) {

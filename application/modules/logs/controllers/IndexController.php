@@ -2,7 +2,6 @@
 
 class Logs_IndexController extends Zend_Controller_Action
 {
-
     protected $_authObj = null;
 
     protected $_flashMessenger = null;

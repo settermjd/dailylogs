@@ -200,14 +200,14 @@
             </id>
         </elements>
     </profile>  
-    <password>
+    <update_password>
         <action>/update-password</action>
         <method>post</method>
         <id>updatePasswordForm</id>
         <name>updatePasswordForm</name>
         <elements>
             <password>
-                <type>hidden</type>
+                <type>password</type>
                 <options>
                     <label>password:</label>
                     <size>40</size>
@@ -231,7 +231,7 @@
                 </options>
             </password>
             <confirm_password>
-                <type>text</type>
+                <type>password</type>
                 <options>
                     <label>confirm password:</label>
                     <size>40</size>
@@ -252,6 +252,7 @@
                     </filters>
                     <class></class>
                     <required>true</required>
+                    <ignore>true</ignore>
                 </options>
             </confirm_password>
             <submit>
@@ -263,7 +264,7 @@
                     <order>4</order>
                 </options>
             </submit>
-            <user_id>
+            <id>
                 <type>hidden</type>
                 <options>
                     <validators>
@@ -284,9 +285,9 @@
                     <class></class>
                     <required>true</required>
                 </options>
-            </user_id>
+            </id>
         </elements>
-    </password>  
+    </update_password>  
     <forgot_password>
         <action>/forgot-password</action>
         <method>post</method>
@@ -373,5 +374,5 @@
                 </options>
             </user_id>
         </elements>
-    </forgot_password>             
+    </forgot_password>
 </forms>
