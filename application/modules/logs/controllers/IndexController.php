@@ -142,6 +142,7 @@ class Logs_IndexController extends Zend_Controller_Action
     public function editLogAction()
     {
         $form = $this->_getEditForm();
+        $servicesMap = $this->getInvokeArg('bootstrap')->getResource('services');
 
         if (!$this->getRequest()->isPost()) {
             $this->view->form = $form;
@@ -149,7 +150,11 @@ class Logs_IndexController extends Zend_Controller_Action
             if ($form->isValid($_POST)) {
                 // success!
                 $formInput = $form->getValues();
+
                 if (!empty($formInput)) {
+                    // check if the data submitted contains spam
+                    $spamStatus = $this->_filterSpamInput($servicesMap, $formInput);
+
                     $logObj = new Logs_Model_Log();
                     $currentLogs = $logObj->editLog(
                         $this->_authObj->id,
@@ -256,13 +261,20 @@ class Logs_IndexController extends Zend_Controller_Action
         }
     }
 
+
+    /**
+     * Manages the record if there's spam in it and adds it to the spam queue.
+     *
+     * @param array $servicesMap
+     */
+    protected function _filterSpamInput($servicesMap, $inputData)
+    {
+        if (array_key_exists('akismet', $servicesMap)) {
+            $akismet = $servicesMap['akismet'];
+            $isSpam = $akismet->isSpam(
+                $akismet->getFilterData($inputData)
+            );
+            return $isSpam;
+        }
+    }
 }
-
-
-
-
-
-
-
-
-
