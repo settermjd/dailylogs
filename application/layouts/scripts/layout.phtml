@@ -1,16 +1,10 @@
-<?php
-$this->headMeta()->appendHttpEquiv('Content-Type', 'text/html;charset=utf-8');
-$this->headTitle()->setSeparator(' | ');
-print $this->doctype('HTML5'); //HTML5 doctype is backwards compatible and therefore safe to use.
-?>
+<?php print $this->doctype(); ?>
 <html lang="en-GB">
     <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=8" />
-        <link rel="icon" href="/icon.ico" type="image/x-icon" />
+        <!-- /meta -->
         <?php print $this->headMeta(); ?>
+        <!-- /#meta -->
         <?php print $this->headTitle(); ?>
-        <!-- /#Meta -->
-
         <!-- /css -->
         <?php
             print $this->headLink()
@@ -20,8 +14,8 @@ print $this->doctype('HTML5'); //HTML5 doctype is backwards compatible and there
         <!-- /#css -->
         <?php print $this->jQuery(); ?>
         <?php
-            if ( $this->ckeditor ) {
-                echo $this->headScript()->appendFile('/js/ckeditor/ckeditor.js');
+            if ($this->ckeditor) {
+                print $this->headScript()->appendFile('/js/ckeditor/ckeditor.js');
             }
         ?>
     </head>
