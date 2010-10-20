@@ -38,6 +38,10 @@
             <route>disclaimer</route>
             <groupname>business</groupname>
             <pages>
+                <about>
+                    <label>About Us</label>
+                    <uri>/about</uri>
+                </about>
                 <privacy>
                     <label>Privacy Policy</label>
                     <uri>/privacy-policy</uri>

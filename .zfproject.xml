@@ -30,6 +30,7 @@
               <actionMethod actionName="termsConditions"/>
               <actionMethod actionName="disclaimer"/>
               <actionMethod actionName="xmlSitemap"/>
+              <actionMethod actionName="about"/>
             </controllerFile>
             <controllerFile controllerName="Error">
               <actionMethod actionName="index"/>
@@ -64,6 +65,9 @@
               </viewControllerScriptsDirectory>
               <viewControllerScriptsDirectory forControllerName="Index">
                 <viewScriptFile forActionName="xmlSitemap"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Index">
+                <viewScriptFile forActionName="about"/>
               </viewControllerScriptsDirectory>
             </viewScriptsDirectory>
             <viewHelpersDirectory/>
