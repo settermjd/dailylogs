@@ -139,6 +139,26 @@ class Logs_IndexController extends Zend_Controller_Action
         $this->view->messages = $this->_flashMessenger->getMessages();
     }
 
+    public function userAction()
+    {
+        $logObj = new Logs_Model_Log();
+        $userObj = new User_Model_User();
+        $username = $this->_request->getParam('username', '');
+        $currentLogs = NULL;
+
+        if (!empty($username)) {
+            $currentLogs = $logObj->findLogsByUsername($username);
+            $paginator = Zend_Paginator::factory($currentLogs);
+            $paginator->setCurrentPageNumber($this->_getParam('page', 1));
+            $this->view->paginator = $paginator;
+        }
+
+        $this->view->usersList = $userObj->getUserList();
+        $this->view->selectedUser = $this->_request->getParam('username', '');
+        $this->view->authUser = $this->_authObj;
+        $this->view->messages = $this->_flashMessenger->getMessages();
+    }
+
     public function editLogAction()
     {
         $form = $this->_getEditForm();
@@ -238,20 +258,6 @@ class Logs_IndexController extends Zend_Controller_Action
         }
     }
 
-    public function userAction()
-    {
-        $logObj = new Logs_Model_Log();
-        $username = $this->_request->getParam('username', '');
-        $currentLogs = NULL;
-
-        if (!empty($username)) {
-            $currentLogs = $logObj->findLogsByUsername($username);
-        }
-        $this->view->logs = $currentLogs;
-        $this->view->authUser = $this->_authObj;
-        $this->view->messages = $this->_flashMessenger->getMessages();
-    }
-
     protected function _clearCachedRecord($cacheId)
     {
         if ($this->_cache) {
@@ -260,7 +266,6 @@ class Logs_IndexController extends Zend_Controller_Action
             }
         }
     }
-
 
     /**
      * Manages the record if there's spam in it and adds it to the spam queue.

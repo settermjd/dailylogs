@@ -14,26 +14,14 @@
     </thead>
     <tfoot>
         <tr align="left">
-            <th colspan="3"><?php print count($this->paginator) . $this->translate(' records'); ?></th>
+            <th colspan="3"><?php
+                print count($this->paginator) . $this->translate(' records');
+            ?></th>
         </tr>
     </tfoot>
     <tbody>
     <?php if (count($this->paginator) > 0): ?>
-        <?php foreach ($this->paginator as $log): ?>
-            <?php
-                $createdDate = new Zend_Date($log->created_date, 'dd.MM.yyyy');
-            ?>
-            <tr>
-                <td><?php print $createdDate->get(Zend_Date::DATE_MEDIUM); ?></td>
-                <td><?php print $log->logsummary; ?></td>
-                <td>
-                    <a href='<?php print $this->url(array('id' => $log->id), 'log-edit-default'); ?>'
-                        title=''><?php print $this->translate('edit'); ?></a> |
-                    <a href='<?php print $this->url(array('logid' => $log->id), 'log-delete'); ?>'
-                        title=''><?php print $this->translate('delete'); ?></a>
-                </td>
-            </tr>
-        <?php endforeach; ?>
+        <?php echo $this->partialLoop('index/partials/logs/record.phtml', $this->paginator); ?>
     <?php endif; ?>
     </tbody>
 </table>

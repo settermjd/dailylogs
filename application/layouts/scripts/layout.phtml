@@ -6,6 +6,7 @@
         <!-- /#meta -->
         <?php print $this->headTitle(); ?>
         <!-- /css -->
+
         <?php
             print $this->headLink()
                        ->prependStylesheet('/css/main.css')
@@ -15,8 +16,13 @@
         <?php print $this->jQuery(); ?>
         <?php
             if ($this->ckeditor) {
-                print $this->headScript()->appendFile('/js/ckeditor/ckeditor.js');
+                print $this->headScript()
+                           ->appendFile('/js/ckeditor/ckeditor.js');
             }
+        ?>
+        <?php
+            print $this->headScript()
+                    ->appendFile('http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
         ?>
     </head>
     <body>
