@@ -1,0 +1,9 @@
+# ignore mac cache files
+.DS_Store
+
+# ignore temp files
+*~
+*.swp
+
+# ignore svn directories
+.svn
