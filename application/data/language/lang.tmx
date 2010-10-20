@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<!DOCTYPE tmx SYSTEM "tmx14.dtd">
+<!-- 
+This translation file provides samples of translating the English phrase
+'About Us', roughly, into Italian, Polish, Hungarian, Afrikaans, Slovak,
+French and German. The base language is British English. When translating
+a phrase, the tuid must be run through the translate method. 
+-->
+<tmx version="1.4">
+   <header creationtoolversion="1.0.0" datatype="winres" segtype="sentence"
+           adminlang="en-gb" srclang="en" o-tmf="abc"
+           creationtool="XYZTool" >
+   </header>
+   <body>
+       <tu tuid='About Us'>
+           <tuv xml:lang="it"><seg>su di noi</seg></tuv>
+           <tuv xml:lang="pl"><seg>o nas</seg></tuv>
+           <tuv xml:lang="hu"><seg>rólunk</seg></tuv>
+           <tuv xml:lang="za"><seg>oor ons</seg></tuv>
+           <tuv xml:lang="sk"><seg>o nás</seg></tuv>           
+           <tuv xml:lang="fr"><seg>A propos de nous</seg></tuv>
+           <tuv xml:lang="de"><seg>Wir über uns</seg></tuv>           
+           <tuv xml:lang="en"><seg>About Us</seg></tuv>
+       </tu>
+   </body>
+</tmx>

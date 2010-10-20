@@ -237,6 +237,50 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     }
 
     /**
+     * Initialise translations
+     */
+    protected function _initLocale()
+    {
+        $this->bootstrap('Cache');
+        $this->bootstrap('Log');
+
+        $locale = new Zend_Locale();
+
+        Zend_Registry::set('Zend_Locale', $locale);
+        if (Zend_Registry::get('cache') !== NULL) {
+            Zend_Translate::setCache(Zend_Registry::get('cache'));
+        }
+
+        $defaultLanguage = 'en';
+
+        $options = array(
+                'log' => $this->getResource('log'),
+                'logUntranslated' => true,
+                'clear' => true,
+                'reload' => true
+        );
+
+        $translate = new Zend_Translate(
+            'tmx', APPLICATION_PATH . '/data/language',
+            'auto',
+            $options
+        );
+        $actual = $translate->getLocale();
+
+        Zend_Registry::set('Zend_Translate', $translate);
+
+        // make the routes translatable
+        Zend_Controller_Router_Route::setDefaultTranslator($translate);
+
+        if (!$translate->isAvailable($locale->getLanguage())) {
+            // not available languages are rerouted to another language
+            $translate->setLocale($defaultlanguage);
+        }
+
+        $translate->getLocale();
+    }
+
+    /**
      * Constructs the Zend_Navigation object from the config file
      */
     private function _buildNavigationObject($navigationConfig, $cacheObj=null, $cacheId=null)
