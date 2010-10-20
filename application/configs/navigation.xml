@@ -8,14 +8,14 @@
             <route>logs</route>
             <groupname>logs-management</groupname>
             <pages>
-                <list_logs>
-                    <label>My Logs</label>
-                    <uri>/logs</uri>
-                </list_logs>
                 <add_log>
                     <label>Add Log</label>
                     <uri>/log/add</uri>
                 </add_log>
+                <list_logs>
+                    <label>My Logs</label>
+                    <uri>/logs</uri>
+                </list_logs>
             </pages>
         </logs>
         <manager>
