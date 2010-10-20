@@ -2,9 +2,13 @@
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
+    const DEFAULT_RECORDS_PER_PAGE = 10;
 
     /**
-     * Setup the application mail functionality - Sendmail
+     * Setup the application mail functionality.
+     *
+     * By default, this uses Sendmail as the mail transport
+     * @link http://framework.zend.com/manual/en/zend.mail.html
      */
     protected function _initMail()
     {
@@ -12,6 +16,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         Zend_Mail::setDefaultTransport($mailTransport);
     }
 
+    /**
+     * Setup the view helpers for the application.
+     *
+     *  This allows for the overriding of the layout and view. It also
+     *  sets additional paths for the view scripts to be located in.
+     *  @link http://framework.zend.com/manual/en/zend.view.html
+     */
     protected function _initViewHelpers()
     {
         $this->bootstrap('layout');
@@ -24,16 +35,27 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
     }
 
+    /**
+     * Sets up the placeholders for the application.
+     *
+     * This resource, looks after the meta, links, doctype, favicons etc
+     * @link http://framework.zend.com/manual/en/zend.view.helpers.html
+     */
     protected function _initPlaceholders()
     {
         $this->bootstrap('layout');
         $layout = $this->getResource('layout');
         $view = $layout->getView();
+
         $view->doctype('XHTML1_STRICT');
         $view->headTitle('Daily Logs')
              ->setSeparator(' | ');
         $view->headMeta()->appendHttpEquiv('Content-Type', 'text/html;charset=utf-8')
              ->appendHttpEquiv('X-UA-Compatible', 'IE=8');
+        $view->headScript()->prependFile(
+            'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js',
+            $type = 'text/javascript'
+        );
         $view->headLink()->headLink(
             array(
                 'rel' => 'favicon',
@@ -43,6 +65,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         );
     }
 
+    /**
+     * Setup access control lists for the application.
+     *
+     * Currently it has three roles: guest, developer and manager. With this
+     * it setups up a logs:index and default:index resource along with
+     * permissions on those resources.
+     * @link http://framework.zend.com/manual/en/zend.acl.html
+     * @return Zend_Acl
+     */
     protected function _initAcls()
     {
         $acl = new Zend_Acl();
@@ -82,7 +113,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         return $acl;
     }
 
-    /*
+    /**
+     * Sets up the ZF Debug plugin.
+     *
+     * This displays a bar that gives debug statistics about the application
+     * @see http://code.google.com/p/zfdebug/
+     * @link http://code.google.com/p/zfdebug/wiki/Documentation
+     */
     protected function _initZFDebug()
     {
         $autoloader = Zend_Loader_Autoloader::getInstance();
@@ -91,27 +128,28 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $options = array(
             'plugins' => array('Variables',
                                'File' => array('base_path' => APPLICATION_PATH),
+                               'Html',
                                'Memory',
                                'Time',
                                'Registry',
                                'Exception'),
             'z-index' => 255,
-            'image_path' => APPLICATION_PATH . '/../public/sites/default/images/debugbar/',
-            'jquery_path' => APPLICATION_PATH . '/../public/sites/default/js/'
+            'image_path' => '/images/debugbar',
+            'jquery_path' => 'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js',
         );
 
         // Instantiate the database adapter and setup the plugin.
         // Alternatively just add the plugin like above and rely on the autodiscovery feature.
-        if ($this->hasPluginResource('db')) {
-            $this->bootstrap('db');
-            $db = $this->getPluginResource('db')->getDbAdapter();
+        if ($this->hasPluginResource('Db')) {
+            $this->bootstrap('Db');
+            $db = $this->getPluginResource('Db')->getDbAdapter();
             $options['plugins']['Database']['adapter'] = $db;
         }
 
         // Setup the cache plugin
-        if ($this->hasPluginResource('cache')) {
-            $this->bootstrap('cache');
-            $cache = $this-getPluginResource('cache')->getDbAdapter();
+        if ($this->hasPluginResource('Cache')) {
+            $this->bootstrap('Cache');
+            $cache = $this-getPluginResource('Cache')->getDbAdapter();
             $options['plugins']['Cache']['backend'] = $cache->getBackend();
         }
 
@@ -121,12 +159,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $frontController = $this->getResource('frontController');
         $frontController->registerPlugin($debug);
     }
-    */
 
     /**
      *  Instantiate the application database resource object
      *
      *  @return Zend_Db_Adapter
+     *  @link http://framework.zend.com/manual/en/zend.db.html
      */
     protected function _initDb()
     {
@@ -175,6 +213,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      * Setup the core config resource
      *
      * @return Zend_Config_Ini
+     * @link http://framework.zend.com/manual/en/zend.config.html
      */
     protected function _initConfig()
     {
@@ -186,9 +225,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         return $config;
     }
 
-    /** init cache
+    /**
+     * Setup the application cache.
      *
      * @return Zend_Cache
+     * @link http://framework.zend.com/manual/en/zend.cache.html
      */
     protected function _initCache()
     {
@@ -218,8 +259,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                         $config->frontend->options->toArray(),
                         $config->backend->options->toArray()
                 );
-                Zend_Registry::set('cache', $cache);
-                return $cache;
             } catch (Zend_Cache_Exception $e) {
                 // send email to alert caching failed
                 Zend_Registry::get('log')->alert(
@@ -227,8 +266,17 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 ));
             }
         }
+        Zend_Registry::set('cache', $cache);
+        return $cache;
     }
 
+    /**
+     * Setup the application navigation.
+     *
+     * Covers support for menus, links, breadcrumbs and is translation enabled
+     * @link http://framework.zend.com/manual/en/zend.navigation.html
+     * @see _buildNavigationObject()
+     */
     protected function _initNavigation()
     {
         $this->bootstrap('layout');
@@ -251,7 +299,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     }
 
     /**
-     * Initialise translations
+     * Initialise translation support
+     *
+     * This setup uses the TMX adapter backend
+     * @link http://framework.zend.com/manual/en/zend.translate.html
      */
     protected function _initLocale()
     {
@@ -316,12 +367,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     /**
      * Initialises application pagination.
      *
-     * @return NULL
+     * It sets up the default template and records per page
+     *
+     * @link http://framework.zend.com/manual/en/zend.paginator.html
      */
     protected function _initPaginator()
     {
         Zend_Paginator::setDefaultScrollingStyle('Sliding');
-        Zend_Paginator::setDefaultItemCountPerPage(1);
+        Zend_Paginator::setDefaultItemCountPerPage(self::DEFAULT_RECORDS_PER_PAGE);
         Zend_View_Helper_PaginationControl::setDefaultViewPartial(
             '/common/pagination/default.phtml'
         );
