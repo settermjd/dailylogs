@@ -307,8 +307,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     protected function _initPaginator()
     {
         Zend_Paginator::setDefaultScrollingStyle('Sliding');
+        Zend_Paginator::setDefaultItemCountPerPage(1);
         Zend_View_Helper_PaginationControl::setDefaultViewPartial(
-            'common/default_pagination.phtml'
+            '/common/pagination/default.phtml'
         );
     }
 }

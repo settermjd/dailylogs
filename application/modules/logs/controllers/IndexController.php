@@ -132,7 +132,9 @@ class Logs_IndexController extends Zend_Controller_Action
 
         Common_Util_Logger::writeLog('Listing logs for: [username]: ' . $this->_authObj->username, Zend_Log::INFO);
 
-        $this->view->logs = $currentLogs;
+        $paginator = Zend_Paginator::factory($currentLogs);
+        $paginator->setCurrentPageNumber($this->_getParam('page', 1));
+        $this->view->paginator = $paginator;
         $this->view->authUser = $this->_authObj;
         $this->view->messages = $this->_flashMessenger->getMessages();
     }
