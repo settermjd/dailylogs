@@ -183,11 +183,9 @@ class User_IndexController extends Zend_Controller_Action
 
     protected function _updateProfile($formInput)
     {
-        if ($updateStatus == 1) {
-            $auth = Zend_Auth::getInstance()->getIdentity();
-            foreach($formInput as $key => $value) {
-                $auth->$key = $value;
-            }
+        $auth = Zend_Auth::getInstance()->getIdentity();
+        foreach($formInput as $key => $value) {
+            $auth->$key = $value;
         }
     }
 
