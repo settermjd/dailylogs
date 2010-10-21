@@ -36,13 +36,13 @@ class Logs_Model_Log extends Zend_Db_Table
     public function getLog($logId, $userId)
     {
         $select = $this->select()
-                       ->where('id = ?', $logId)
-                       ->where('user_id = ?', $userId);
+                       ->where('logs.id = ?', $logId)
+                       ->where('logs.user_id = ?', $userId);
         $row = $this->fetchRow($select);
         return $row;
     }
 
-    public function findLogs($userId, $logOptions=array())
+    public function findLogs($logOptions=array())
     {
         $select = $this->select()->order('created_date DESC');
         foreach($logOptions as $key => $value) {
@@ -51,7 +51,7 @@ class Logs_Model_Log extends Zend_Db_Table
         return $this->fetchAll($select);
     }
 
-    public function findLogsByUsername($userName)
+    public function findUserLogs()
     {
         $select = $this->select(Zend_Db_Table::SELECT_WITH_FROM_PART)->setIntegrityCheck(false)
                     ->join(
@@ -59,7 +59,63 @@ class Logs_Model_Log extends Zend_Db_Table
                         "users.id = $this->_name.user_id",
                         array('id', 'username', 'firstname', 'lastname', 'email')
                     )
+                    ->order(array('logs.created_date DESC', 'users.username ASC'));
+        return $this->fetchAll($select);
+    }
+
+    public function findLogsByUsername($userName)
+    {
+        $select = $this->select()->setIntegrityCheck(false)
+                    ->from(
+                        $this->_name,
+                        array(
+                            'logs.id',
+                            'logs.created_date',
+                            'logs.logbody',
+                            'logs.logsummary',
+                            'logs.user_id',
+                        )
+                    )
+                    ->join(
+                        "users",
+                        "users.id = $this->_name.user_id",
+                        array(
+                            'users.username',
+                            'users.firstname',
+                            'users.lastname',
+                            'users.email'
+                        )
+                    )
                     ->where("users.username = ?", $userName)
+                    ->order('created_date DESC');
+
+        return $this->fetchAll($select);
+    }
+
+    public function findLogsByUserId($userId)
+    {
+        $select = $this->select()->setIntegrityCheck(false)
+                    ->from(
+                        $this->_name,
+                        array(
+                            'logs.id',
+                            'logs.created_date',
+                            'logs.logbody',
+                            'logs.logsummary',
+                            'logs.user_id',
+                        )
+                    )
+                    ->join(
+                        "users",
+                        "users.id = $this->_name.user_id",
+                        array(
+                            'users.username',
+                            'users.firstname',
+                            'users.lastname',
+                            'users.email'
+                        )
+                    )
+                    ->where("users.id = ?", $userId)
                     ->order('created_date DESC');
 
         return $this->fetchAll($select);
