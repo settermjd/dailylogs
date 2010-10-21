@@ -9,6 +9,7 @@ User <?php print $this->userList($this->usersList, $this->selectedUser); ?>
     <thead>
         <tr align="left">
             <th><?php print $this->translate('Log Date'); ?></th>
+            <th><?php print $this->translate('Username'); ?></th>
             <th><?php print $this->translate('Body'); ?></th>
             <td>&nbsp;</td>
         </tr>
@@ -20,7 +21,8 @@ User <?php print $this->userList($this->usersList, $this->selectedUser); ?>
     </tfoot>
     <tbody>
     <?php if (count($this->paginator) > 0): ?>
-        <?php echo $this->partialLoop('index/partials/logs/record.phtml', $this->paginator); ?>
+        <?php echo $this->partialLoop('index/partials/logs/user-record.phtml', $this->paginator); ?>
     <?php endif; ?>
     </tbody>
 </table>
+<?php echo $this->paginator; ?>

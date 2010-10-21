@@ -110,12 +110,14 @@ class Logs_IndexController extends Zend_Controller_Action
 
     public function listLogsAction()
     {
+        $currentLogs = NULL;
+
         if ($this->_cache) {
             if ($this->_cache->test('_listlogs_' . $this->_authObj->id)) {
                 $currentLogs = $this->_cache->load('_listlogs_' . $this->_authObj->id);
             } else {
                 $logObj = new Logs_Model_Log();
-                $currentLogs = $logObj->findLogs($this->_authObj->id);
+                $currentLogs = $logObj->findLogsByUserId($this->_authObj->id);
                 $this->_cache->save(
                     $currentLogs,
                     '_listlogs_' . $this->_authObj->id,
@@ -127,7 +129,7 @@ class Logs_IndexController extends Zend_Controller_Action
             }
         } else {
             $logObj = new Logs_Model_Log();
-            $currentLogs = $logObj->findLogs($this->_authObj->id);
+            $currentLogs = $logObj->findLogsByUserId($this->_authObj->id);
         }
 
         Common_Util_Logger::writeLog('Listing logs for: [username]: ' . $this->_authObj->username, Zend_Log::INFO);
@@ -148,10 +150,13 @@ class Logs_IndexController extends Zend_Controller_Action
 
         if (!empty($username)) {
             $currentLogs = $logObj->findLogsByUsername($username);
-            $paginator = Zend_Paginator::factory($currentLogs);
-            $paginator->setCurrentPageNumber($this->_getParam('page', 1));
-            $this->view->paginator = $paginator;
+        } else {
+            $currentLogs = $logObj->findUserLogs();
         }
+
+        $paginator = Zend_Paginator::factory($currentLogs);
+        $paginator->setCurrentPageNumber($this->_getParam('page', 1));
+        $this->view->paginator = $paginator;
 
         $this->view->usersList = $userObj->getUserList();
         $this->view->selectedUser = $this->_request->getParam('username', '');

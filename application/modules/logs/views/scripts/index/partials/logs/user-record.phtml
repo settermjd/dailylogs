@@ -1,0 +1,12 @@
+<?php $createdDate = new Zend_Date($this->created_date, 'dd.MM.yyyy'); ?>
+<tr>
+    <td><?php print $this->escape($createdDate->get(Zend_Date::DATE_MEDIUM)); ?></td>
+    <td><?php print $this->escape($this->username); ?></td>
+    <td><?php print $this->escape($this->logsummary); ?></td>
+    <td>
+        <a href='<?php print $this->url(array('id' => $this->id), 'log-edit-default'); ?>'
+            title=''><?php print $this->translate('edit'); ?></a> |
+        <a href='<?php print $this->url(array('logid' => $this->id), 'log-delete'); ?>'
+            title=''><?php print $this->translate('delete'); ?></a>
+    </td>
+</tr>
