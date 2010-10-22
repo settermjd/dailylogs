@@ -5,6 +5,10 @@ body {
     font-size: 12px;
 }
 
+#wrapper {
+    overflow:hidden;
+}
+
 #header, #footer, #content {
     clear: both;
 }
