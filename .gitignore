@@ -7,3 +7,6 @@
 
 # ignore svn directories
 .svn
+
+# ignore eclipse files
+.settings/org.eclipse.php.core.prefs

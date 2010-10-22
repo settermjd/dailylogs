@@ -32,17 +32,29 @@ class Common_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
         if ($auth->hasIdentity()) {
             $authObj = $auth->getStorage()->read();
             $role = $authObj->role;
-        }
+            if ($acl->has($resource) &&
+                !$acl->isAllowed($role, $resource, $request->getActionName()))
+            {
+                if ($request->getModuleName() == 'user' && $request->getControllerName() == 'index'
+                    && $request->getActionName() == 'access-denied') {
+                    return TRUE;
+                }
 
-        if ($acl->has($resource) &&
-            !$acl->isAllowed($role, $resource, $request->getActionName()))
-        {
-            $flashMessenger->addMessage(
-                'You do not have the proper access level to view that page'
-            );
+                $flashMessenger->addMessage(
+                    'You do not have the proper access level to view that page'
+                );
+                $redirector->setCode(303)
+                           ->setExit(true)
+                           ->setGotoRoute(array(), self::ACCESS_DENIED_ROUTE, true);
+            }
+        } else {
+            if ($request->getModuleName() == 'user' && $request->getControllerName() == 'index'
+                && $request->getActionName() == 'login') {
+                return TRUE;
+            }
             $redirector->setCode(303)
                        ->setExit(true)
-                       ->setGotoRoute(array(), self::ACCESS_DENIED_ROUTE, true);
+                       ->setGotoRoute(array(), 'login', true);
         }
     }
 }
