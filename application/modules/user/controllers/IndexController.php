@@ -73,6 +73,8 @@ class User_IndexController extends Zend_Controller_Action
                 $this->view->form = $form;
             }
         }
+
+        $this->view->bodyClass="class='fullwidth'";
     }
 
     public function logoutAction()
