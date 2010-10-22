@@ -85,7 +85,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $moduleResource = new Zend_Acl_Resource('logs');
         $acl->add($moduleResource)
             ->add(new Zend_Acl_Resource('logs:index'), $moduleResource)
-            ->add(new Zend_Acl_Resource('default:index'), $moduleResource);
+            ->add(new Zend_Acl_Resource('default:index'), $moduleResource)
+            ->add(new Zend_Acl_Resource('user:index'), $moduleResource);
 
         $acl->allow(
             array('developer'),
@@ -94,12 +95,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         );
 
         $acl->allow(
-            array('manager'),
-            'logs:index',
-            array('user')
+            array('manager'), 'logs:index', array('user')
         );
 
         $acl->allow(null, 'default:index');
+        $acl->allow('developer', 'user:index');
+        $acl->allow('manager', 'user:index');
 
         Zend_Registry::set('acl', $acl);
 
