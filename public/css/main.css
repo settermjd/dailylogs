@@ -1,8 +1,237 @@
 @CHARSET "UTF-8";
 
+/**
+* ====================================
+*       CSS RESET + HTML5 BLOCKS
+* ====================================
+*/
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,figure,footer,header,hgroup,menu,nav,section,menu,time,mark,audio,video
+    {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+article,aside,figure,footer,header,hgroup,nav,section {
+    display: block;
+}
+
+blockquote,q {
+    quotes: none;
+}
+
+blockquote:before,blockquote:after,q:before,q:after {
+    content: '';
+    content: none;
+}
+
+a {
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+ins {
+    background-color: #ff9;
+    color: #000;
+    text-decoration: none;
+}
+
+mark {
+    background-color: #ff9;
+    color: #000;
+    font-style: italic;
+    font-weight: bold;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+abbr[title],dfn[title] {
+    border-bottom: 1px dotted #000;
+    cursor: help;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+input,select {
+    vertical-align: middle;
+}
+
+/* Align checkboxes, radios, text inputs with their label  */
+input[type="radio"] {
+    vertical-align: text-bottom;
+}
+
+input[type="checkbox"] {
+    vertical-align: bottom;
+    *vertical-align: baseline;
+}
+
+.ie6 input {
+    vertical-align: text-bottom;
+}
+
+/* Hand cursor on clickable input elements */
+label,input[type=button],input[type=submit],button {
+    cursor: pointer;
+}
+
+/* When user highlights text (the 2 must be seperate). No text-shadow - http://j.mp/bH4kTP  */
+::-moz-selection {
+    background: #f33;
+    color: #fff;
+    text-shadow: none;
+}
+
+::selection {
+    background: #f33;
+    color: #fff;
+    text-shadow: none;
+}
+
+/* Link highlight colour on touchscreen devices */
+a:link {
+    -webkit-tap-highlight-color: #f33;
+}
+
+/* Always force a scrollbar in non-IE */
+html {
+    overflow-y: scroll;
+}
+
+/* Make buttons play nice in IE - http://j.mp/iahmE */
+button {
+    width: auto;
+    overflow: visible;
+}
+
+/* Bicubic resizing for non-native sized IMG - http://j.mp/Yhlj */
+.ie7 img {
+    -ms-interpolation-mode: bicubic;
+}
+
+/**
+* ====================================
+*              TYPOGRAPHY
+* ====================================
+*/
+/* For font sizing refer to Yahoo CSS Fonts (YUI) - http://j.mp/syErN */
 body {
-    font-family: sans-serif;
-    font-size: 12px;
+    font: 13px sans-serif;
+    *font-size: small;
+    *font: x-small;
+    line-height: 1.5;
+}
+
+table {
+    font-size: inherit;
+    font: 100%;
+}
+
+select,input,textarea {font: 99% sans-serif;}
+
+/* normalize monospace font sizing - http://j.mp/ciqrEn */
+pre,code,kbd,samp {font-family: monospace, sans-serif;}
+
+/* #444 looks better than black - can overwritten to black on handheld devices */
+body,select,input,textarea {color: #444;}
+
+/* Define base font-sizes and improve legibility of heading text - http://j.mp/aZA7Hz */
+h1,h2,h3,h4,h5,h6 {
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 0.6em;
+    text-rendering: optimizeLegibility;
+}
+
+p {margin-bottom:0.8em;}
+
+/* FONT SIZES - Always use percentages as the units because they render more consistently than ems,
+and allow user-initiated resizing (unlike pixels) */
+h1 {font-size: 182%;} /* 24px */
+h2 {font-size: 153.9%;} /* 20px */
+h3 {font-size: 138.5%;} /* 18px */
+h4 {font-size: 123.1%;} /* 16px */
+h5 {font-size: 108%;} /* 14px */
+h6,p {font-size: 93%;} /* 12px */
+.flagslist {font-size: 85%;} /* 11px */
+small,#copyright p {font-size: 77%;}  /* 10px */ 
+
+/* Improves font rendering on webkit browsers - http://j.mp/cdYZnU */
+html {-webkit-font-smoothing: antialiased;}
+
+/* Accessible focus reset: http://j.mp/4LqUR */
+a:hover,a:active {outline: none;}
+
+a,a:active,a:visited {
+    color: #069;
+    text-decoration: none;
+}
+a:hover {
+    color: #036;
+    text-decoration: underline;
+}
+
+ul {margin-left: 30px;}
+
+ol {
+    margin-left: 30px;
+    list-style-type: decimal;
+}
+
+strong,th {font-weight: bold;}
+
+td,td img {vertical-align: top;}
+
+sub {
+    vertical-align: sub;
+    font-size: smaller;
+}
+
+sup {
+    vertical-align: super;
+    font-size: smaller;
+}
+
+pre {
+    padding: 15px;
+    /* White-space formatting for coded areas - http://j.mp/9AZ74h */
+    white-space: pre; /* CSS2 */
+    white-space: pre-wrap; /* CSS 2.1 */
+    white-space: pre-line; /* CSS 3 */
+    word-wrap: break-word; /* IE */
+}
+
+/**
+* ====================================
+*              STRUCTURE
+* ====================================
+*/
+
+
+body {
+    background:#f6fdff url(../images/layout/page-bg.jpg) scroll repeat-x;
+    padding:0 20px 20px 20px;
 }
 
 #wrapper {
@@ -13,16 +242,66 @@ body {
     clear: both;
 }
 
-div#navigation {
-    float: left;
-    width: 190px;
+#header h1 {
+    margin-bottom:0 !important;
 }
 
-div#body {
+#navigation {
     float: left;
-    width: 80%;	
+    width: 170px;
+    position:relative;
+    left:-210px;
+    margin-left:-100%;
+}
+.navigation {margin-left:0; overflow:hidden;}
+ul.navigation li {list-style-type:none; list-style-position:inside;}
+
+#body {
+    margin-top:20px;
+    margin-left:210px;	
+    float:left;
+    position:relatiive;
+    width:100%;
 }
 
-div#navigation {
+.fullwidth {margin-right:190px;}
+.innerwrap {
+    padding:10px;
+    background-color:#fff;
+    border:1px solid #bfe7f6;
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+}
+
+#navigation {
     margin-right: 40px;
 }
+
+#header {
+    background-color:#fff;
+    padding:10px;
+    border:1px solid #bfe7f6;
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    margin-top:20px;
+}
+
+#navigation {
+    background-color:#fff;
+    border:1px solid #bfe7f6;
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    margin-top:20px;
+}
+
+#colophon {
+    overflow:hidden;
+    padding:10px;
+    margin-top:20px;
+}
+
+label {text-transform:capitalize;}
+

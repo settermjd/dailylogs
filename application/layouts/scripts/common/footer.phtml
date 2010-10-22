@@ -1,3 +1,5 @@
+
+<div id="colophon">
 <!-- footer template -->
 <?php
     $generalMenu = $this->navigation()->findOneByLabel('General Pages');
@@ -6,7 +8,6 @@
 <div>
     <?php $auth = Zend_Auth::getInstance(); ?>
     <?php if ($auth->hasIdentity()): ?>
-        <div id="nav-header"><?php print $this->translate('General Pages'); ?></div>
         <?php
             print $this->navigation()
                        ->menu()
@@ -17,7 +18,6 @@
 <div>
     <?php $auth = Zend_Auth::getInstance(); ?>
     <?php if ($auth->hasIdentity()): ?>
-        <div id="nav-header"><?php print $this->translate('Business Pages'); ?></div>
         <?php
             print $this->navigation()
                        ->menu()
@@ -26,5 +26,6 @@
     <?php endif;?>
 </div>
 <div id="copyright">
-    copyright (c) 2010 <a href='http://www.matthewsetter.com'>Matthew Setter</a>. all rights reserved.
+    &copy; copyright <?php echo date('Y'); ?> <a href='http://www.matthewsetter.com'>Matthew Setter</a>. All rights reserved.
+</div>
 </div>

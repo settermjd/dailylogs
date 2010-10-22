@@ -29,10 +29,12 @@
         <div id="wrapper">
             <?php print $this->partial('common/header.phtml'); ?>
             <div id="content">
-                <?php print $this->partial('common/navigation.phtml'); ?>
                 <div id="body">
+                    <div class="innerwrap">
                     <?php print $this->layout()->content; ?>
+                    </div>
                 </div>
+                <?php print $this->partial('common/navigation.phtml'); ?>
             </div>
         </div>
         <!-- /#wrapper -->

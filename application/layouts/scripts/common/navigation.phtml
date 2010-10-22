@@ -3,10 +3,10 @@
     $managerMenu = $this->navigation()->findOneByLabel('Manager Pages');
     $userMenu = $this->navigation()->findOneByLabel('User Pages');
 ?>
-<div id="navigation">
     <?php $auth = Zend_Auth::getInstance(); ?>
     <?php if ($auth->hasIdentity()): ?>
-    <div id="nav-header"><?php print $this->translate('Navigation'); ?></div>
+    <div id="navigation" class="innerwrap">
+    <div id="nav-header"><?php print $this->translate('Navigation'); ?>:</div>
         <?php
             switch ($auth->getIdentity()->role) {
                 case ('developer'):
@@ -28,5 +28,5 @@
                        ->renderMenu($userMenu);
 
         ?>
+        </div>
     <?php endif;?>
-</div>
